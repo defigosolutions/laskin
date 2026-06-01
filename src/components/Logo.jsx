@@ -1,0 +1,185 @@
+import React, { useState, useEffect } from 'react';
+
+export default function Logo({ variant = 'horizontal', className = '', height = 50 }) {
+  const [useImage, setUseImage] = useState(false);
+  const [imgSrc, setImgSrc] = useState('/logo.png'); // Default check public/logo.png or src/assets/logo.png
+
+  useEffect(() => {
+    // Check if user uploaded a logo image in public directory
+    const img = new Image();
+    img.src = '/logo.png';
+    img.onload = () => setUseImage(true);
+    img.onerror = () => {
+      // Also check standard React asset path or fallback to vector
+      const assetImg = new Image();
+      assetImg.src = '/src/assets/logo.png';
+      assetImg.onload = () => {
+        setImgSrc('/src/assets/logo.png');
+        setUseImage(true);
+      };
+      assetImg.onerror = () => setUseImage(false);
+    };
+  }, []);
+
+  if (useImage) {
+    return (
+      <div className={`flex items-center justify-center ${className}`} style={{ height: `${height}px` }}>
+        <img 
+          src={imgSrc} 
+          alt="LA Skin & Aesthetics Logo" 
+          style={{ height: '100%', width: 'auto', objectFit: 'contain' }} 
+        />
+      </div>
+    );
+  }
+
+  // Fallback to our stunning vector rendering that mimics the gold rose-pink luxury emblem
+  const symbolSvg = (
+    <svg 
+      viewBox="0 0 120 120" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg" 
+      style={{ height: `${height}px`, width: `${height}px` }}
+    >
+      <defs>
+        <linearGradient id="roseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#F9D7D0" />
+          <stop offset="35%" stopColor="#E3B29A" />
+          <stop offset="70%" stopColor="#C59B78" />
+          <stop offset="100%" stopColor="#9C7756" />
+        </linearGradient>
+        <filter id="subtleGlow" x="-10%" y="-10%" width="120%" height="120%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#C29B78" floodOpacity="0.15" />
+        </filter>
+      </defs>
+
+      {/* Outer circular thin border */}
+      <circle cx="60" cy="60" r="54" stroke="url(#roseGold)" strokeWidth="1.2" opacity="0.8" filter="url(#subtleGlow)" />
+      
+      {/* Decorative leaf flourishes on the left */}
+      <path 
+        d="M26 72C22 66 21.5 56.5 25.5 47C26.5 44.5 28 41 28 41C28 41 29 44.5 28.5 47.5C27.5 54 28 59 34 66C38 70.5 43 72.5 46.5 73.5C40.5 74.5 32 75 26 72Z" 
+        fill="url(#roseGold)" 
+        opacity="0.85" 
+      />
+      <path 
+        d="M17 52C16 46 20.5 38.5 26.5 34.5C28.5 33 30.5 31.5 30.5 31.5C30.5 31.5 29.5 34 28 36C23 42 22 47 24 53C25 56 25 59.5 23.5 61.5C22 58.5 18 56 17 52Z" 
+        fill="url(#roseGold)" 
+        opacity="0.9" 
+      />
+      <path 
+        d="M24 81.5C27 82.5 32.5 82 36.5 80C38.5 79 41.5 77 41.5 77C41.5 77 38.5 78.5 35.5 79.5C29.5 81 26 80 24 81.5Z" 
+        fill="url(#roseGold)" 
+        opacity="0.75" 
+      />
+
+      {/* Intertwined LA Monogram & Silhouette */}
+      <g filter="url(#subtleGlow)">
+        {/* Letter L */}
+        <path 
+          d="M40 33H48V72.5C48 76.5 47 78 43 78H40V80.5H58V78H55C51 78 51 76.5 51 72.5V37.5C51 33.5 50.5 33 46.5 33H40V33Z" 
+          fill="url(#roseGold)" 
+        />
+        
+        {/* Letter A with Silhouette Profile overlay */}
+        {/* Inner profile silhouette matching the gold styling */}
+        <path 
+          d="M59 31C61.5 26.5 66 18.5 66 18.5L78 69.5C79 73.5 82 76.5 85 77.5V80.5H68V77.5H71.5C73.5 77.5 74 76.5 73.5 74.5L71.5 65.5H50.5C49.5 66.5 49 68 49 69.5C49 74.5 52 77.5 56.5 77.5H58V80.5H41V77.5C44.5 77.5 47 75.5 48 71.5L52.5 53.5C56.5 55 61.5 56.5 66 57.5L68 50.5C62.5 49 57.5 47 54.5 45.5L58 31.5H59Z" 
+          fill="url(#roseGold)" 
+          opacity="0.45"
+        />
+
+        {/* Outer stylized A side curve representing face profile */}
+        <path 
+          d="M66 18.5C66 18.5 60.5 32 63.5 43.5C65.5 51 68 53.5 73 59.5C74.5 61.5 72.5 64 70 65.5C66 68 59 70 51.5 65.5C58.5 63 67.5 64.5 71 58.5C74 53 71.5 49.5 66 43.5C61.5 38.5 65.5 28 66 18.5Z" 
+          fill="url(#roseGold)" 
+        />
+
+        {/* Elegant face profile contour */}
+        <path 
+          d="M66 18.5C66 21 68 25.5 70.5 28.5C72 30.5 74.5 31.5 74.5 33.5C74.5 35.5 72.5 36.5 71.5 38C70 40 73.5 42 74 44.5C74.5 46.5 72.5 47.5 72 49C71.5 50.5 73 52.5 72.5 55.5C71.5 61 68 64.5 62 67.5C60.5 68 61 70.5 63 69.5C69 66 73 62 74 55.5C74.5 52 73.5 50.5 74 49C74.5 47 76 46 76 44C76 42 73.5 40.5 74 38.5C74.5 36.5 76.5 35 76.5 33C76.5 31 74.5 29.5 73 27.5C71 24.5 68 19.5 66 18.5Z" 
+          fill="url(#roseGold)" 
+        />
+      </g>
+
+      {/* Tiny decorative beads */}
+      <circle cx="27" cy="23" r="1.5" fill="url(#roseGold)" />
+      <circle cx="22" cy="27" r="1" fill="url(#roseGold)" />
+      <circle cx="91" cy="58" r="1.2" fill="url(#roseGold)" />
+      <circle cx="89" cy="54" r="0.8" fill="url(#roseGold)" />
+    </svg>
+  );
+
+  const textStyle = {
+    fontFamily: "var(--font-serif)",
+    color: "var(--color-text-dark)",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    letterSpacing: "0.22em",
+  };
+
+  const tagStyle = {
+    fontFamily: "var(--font-sans)",
+    fontSize: "8px",
+    letterSpacing: "0.38em",
+    color: "var(--color-gold-base)",
+    textTransform: "uppercase",
+    marginTop: "4px",
+    fontWeight: 500,
+  };
+
+  if (variant === 'symbol') {
+    return symbolSvg;
+  }
+
+  if (variant === 'horizontal') {
+    return (
+      <div className={`flex items-center gap-3 select-none ${className}`} style={{ display: 'flex', alignItems: 'center' }}>
+        {symbolSvg}
+        <div style={textStyle}>
+          <span style={{ fontSize: `${height * 0.38}px`, fontWeight: '400', lineHeight: 1.1 }}>LA SKIN</span>
+          <span style={{ fontSize: `${height * 0.22}px`, fontWeight: '300', opacity: 0.85, letterSpacing: '0.24em', lineHeight: 1 }}>& AESTHETICS</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Full elegant vertical stack logo (For Hero, Footer or large banners)
+  return (
+    <div className={`flex flex-col items-center text-center select-none ${className}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+      {symbolSvg}
+      <div className="mt-4" style={{ marginTop: '16px' }}>
+        <h2 style={{ 
+          fontFamily: "var(--font-serif)", 
+          fontSize: '26px', 
+          letterSpacing: '0.28em', 
+          color: 'var(--color-text-dark)',
+          fontWeight: 400,
+          lineHeight: '1.2' 
+        }}>
+          LA SKIN
+        </h2>
+        <h3 style={{ 
+          fontFamily: "var(--font-serif)", 
+          fontSize: '15px', 
+          letterSpacing: '0.3em', 
+          color: 'var(--color-text-dark)', 
+          fontWeight: 300,
+          opacity: 0.85,
+          marginTop: '2px',
+          lineHeight: '1.2'
+        }}>
+          & AESTHETICS
+        </h3>
+        <div style={{ 
+          width: '50px', 
+          height: '1px', 
+          background: 'var(--color-gold-gradient)', 
+          margin: '12px auto 8px auto' 
+        }} />
+        <span style={tagStyle}>RADIATE. REJUVENATE. REVEAL.</span>
+      </div>
+    </div>
+  );
+}
