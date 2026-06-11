@@ -22,8 +22,8 @@ export default function Hero({ onBookingClick }) {
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        background: 'linear-gradient(rgba(42, 36, 33, 0.45), rgba(42, 36, 33, 0.25)), url("https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1920&auto=format&fit=crop") no-repeat center center / cover',
-        color: 'white',
+        background: 'linear-gradient(rgba(250, 246, 244, 0.9), rgba(250, 246, 244, 0.4)), url("https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1920&auto=format&fit=crop") no-repeat center center / cover',
+        color: 'var(--color-text-dark)',
         padding: '120px 0 80px 0',
         zIndex: 5,
         overflow: 'hidden'
@@ -33,7 +33,7 @@ export default function Hero({ onBookingClick }) {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'radial-gradient(circle at 70% 30%, rgba(246, 230, 227, 0.15) 0%, transparent 60%)',
+        background: 'radial-gradient(circle at 70% 30%, rgba(194, 155, 120, 0.15) 0%, transparent 60%)',
         pointerEvents: 'none'
       }} />
 
@@ -59,12 +59,12 @@ export default function Hero({ onBookingClick }) {
             fontSize: 'calc(38px + 2vw)',
             fontWeight: '300',
             lineHeight: '1.15',
-            color: '#FFFFFF',
+            color: 'var(--color-text-dark)',
             marginBottom: '24px',
-            textShadow: '0 2px 10px rgba(42, 36, 33, 0.2)'
+            textShadow: '0 4px 20px rgba(42, 36, 33, 0.1)'
           }}>
             Elevate Your <br />
-            <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: '400', color: 'var(--color-gold-light)' }}>
+            <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: '400', color: 'var(--color-gold-base)' }}>
               Natural Radiance
             </span>
           </h1>
@@ -75,7 +75,7 @@ export default function Hero({ onBookingClick }) {
             fontSize: '16px',
             fontWeight: '300',
             lineHeight: '1.8',
-            color: 'rgba(255, 255, 255, 0.9)',
+            color: 'var(--color-text-muted)',
             marginBottom: '40px',
             maxWidth: '560px'
           }}>
@@ -92,15 +92,12 @@ export default function Hero({ onBookingClick }) {
               Book Priority Visit
             </button>
             <button 
-              className="btn-secondary" 
+              className="btn-secondary hero-btn-sec" 
               onClick={handleScrollToTreatments}
               style={{ 
                 padding: '15px 35px', 
-                fontSize: '12px',
-                color: 'white',
-                borderColor: 'rgba(255, 255, 255, 0.6)'
+                fontSize: '12px'
               }}
-              className="hero-btn-sec"
             >
               Explore Treatments
             </button>
@@ -112,11 +109,11 @@ export default function Hero({ onBookingClick }) {
           position: 'absolute',
           bottom: '-20px',
           right: '24px',
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.15)',
-          borderRadius: 'var(--radius-md)',
+          background: 'var(--color-glass-dark)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          border: '1px solid var(--color-border-strong)',
+          borderRadius: 'var(--radius-lg)',
           padding: '24px 32px',
           display: 'flex',
           gap: '40px',
@@ -126,29 +123,23 @@ export default function Hero({ onBookingClick }) {
         className="desktop-only hero-floating-box"
         >
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', color: 'var(--color-gold-light)' }}>99%</h4>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8 }}>Satisfaction</span>
+            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', color: 'var(--color-gold-base)' }}>99%</h4>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8, color: 'var(--color-text-dark)' }}>Satisfaction</span>
           </div>
-          <div style={{ width: '1px', background: 'rgba(255, 255, 255, 0.2)' }} />
+          <div style={{ width: '1px', background: 'var(--color-border-light)' }} />
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', color: 'var(--color-gold-light)' }}>15k+</h4>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8 }}>Clients Served</span>
+            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', color: 'var(--color-gold-base)' }}>15k+</h4>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8, color: 'var(--color-text-dark)' }}>Clients Served</span>
           </div>
-          <div style={{ width: '1px', background: 'rgba(255, 255, 255, 0.2)' }} />
+          <div style={{ width: '1px', background: 'var(--color-border-light)' }} />
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', color: 'var(--color-gold-light)' }}>10+</h4>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8 }}>Elite Specialists</span>
+            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', color: 'var(--color-gold-base)' }}>10+</h4>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8, color: 'var(--color-text-dark)' }}>Elite Specialists</span>
           </div>
         </div>
       </div>
 
       <style>{`
-        .hero-btn-sec:hover {
-          background: rgba(255, 255, 255, 0.1) !important;
-          color: white !important;
-          border-color: white !important;
-        }
-        
         @media (max-width: 1024px) {
           .hero-floating-box {
             display: none !important;

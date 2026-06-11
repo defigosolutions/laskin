@@ -70,10 +70,10 @@ export default function Packages({ onReservePackage }) {
           {packages.map((pkg) => (
             <div
               key={pkg.id}
-              className="glass-panel reveal-in"
+              className="glass-panel reveal-in pkg-card"
               style={{
                 padding: '50px 40px',
-                backgroundColor: pkg.badge ? 'rgba(255, 255, 255, 0.95)' : 'white',
+                backgroundColor: pkg.badge ? 'var(--color-glass-white)' : 'transparent',
                 border: pkg.badge ? '2px solid var(--color-gold-base)' : '1px solid var(--color-border-light)',
                 borderRadius: 'var(--radius-lg)',
                 display: 'flex',
@@ -81,7 +81,6 @@ export default function Packages({ onReservePackage }) {
                 position: 'relative',
                 transition: 'var(--transition-smooth)'
               }}
-              className="pkg-card"
             >
               {/* Gold highlights for bestseller */}
               {pkg.badge && (

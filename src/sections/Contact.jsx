@@ -44,7 +44,7 @@ export default function Contact() {
         left: '-5%',
         width: '400px',
         height: '400px',
-        background: 'radial-gradient(circle, rgba(246, 230, 227, 0.3) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%)',
         pointerEvents: 'none'
       }} />
 
@@ -72,7 +72,7 @@ export default function Contact() {
             {/* Branch selector buttons */}
             <div style={{
               display: 'flex',
-              backgroundColor: 'white',
+              backgroundColor: 'var(--color-glass-white)',
               border: '1px solid var(--color-border-light)',
               borderRadius: 'var(--radius-md)',
               padding: '6px',
@@ -110,7 +110,7 @@ export default function Contact() {
               className="glass-panel"
               style={{
                 padding: '40px',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 animation: 'fadeIn 0.5s ease-in-out forwards'
               }}
             >
@@ -203,7 +203,7 @@ export default function Contact() {
               border: '1px solid var(--color-border-strong)',
               boxShadow: 'var(--shadow-luxury)',
               overflow: 'hidden',
-              background: '#FAF0EB',
+              background: 'var(--color-bg-tertiary)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
@@ -229,7 +229,7 @@ export default function Contact() {
                 height: '100px',
                 top: '20%',
                 left: '15%',
-                backgroundColor: 'white',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 filter: 'blur(30px)',
                 borderRadius: '50%',
                 opacity: 0.8,
@@ -241,7 +241,7 @@ export default function Contact() {
                 height: '140px',
                 bottom: '25%',
                 right: '10%',
-                backgroundColor: 'white',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 filter: 'blur(40px)',
                 borderRadius: '50%',
                 opacity: 0.9,
@@ -286,7 +286,7 @@ export default function Contact() {
                     width: '16px',
                     height: '16px',
                     borderRadius: '50%',
-                    background: activeBranch === b.id ? 'var(--color-gold-gradient)' : 'white',
+                    background: activeBranch === b.id ? 'var(--color-gold-gradient)' : 'var(--color-bg-secondary)',
                     border: '2px solid var(--color-gold-base)',
                     boxShadow: '0 2px 8px rgba(42, 36, 33, 0.2)',
                     transition: 'var(--transition-smooth)'
@@ -295,8 +295,8 @@ export default function Contact() {
                   {/* Branch Tag Label */}
                   <span style={{
                     marginTop: '8px',
-                    backgroundColor: activeBranch === b.id ? 'var(--color-text-dark)' : 'white',
-                    color: activeBranch === b.id ? 'white' : 'var(--color-text-muted)',
+                    backgroundColor: activeBranch === b.id ? 'var(--color-text-dark)' : 'var(--color-glass-white)',
+                    color: activeBranch === b.id ? 'var(--color-bg-primary)' : 'var(--color-text-muted)',
                     border: '1px solid var(--color-border-light)',
                     fontSize: '9px',
                     fontFamily: 'var(--font-sans)',
@@ -318,7 +318,7 @@ export default function Contact() {
                 position: 'absolute',
                 bottom: '16px',
                 left: '16px',
-                background: 'rgba(255,255,255,0.85)',
+                background: 'var(--color-glass-dark)',
                 backdropFilter: 'blur(4px)',
                 border: '1px solid var(--color-border-light)',
                 padding: '6px 14px',

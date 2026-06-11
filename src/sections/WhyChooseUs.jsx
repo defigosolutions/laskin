@@ -54,8 +54,8 @@ export default function WhyChooseUs() {
       <svg width="0" height="0" style={{ position: 'absolute' }}>
         <defs>
           <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#E8CCA4" />
-            <stop offset="100%" stopColor="#997452" />
+            <stop offset="0%" stopColor="#FAFAFA" />
+            <stop offset="100%" stopColor="#A1A1AA" />
           </linearGradient>
         </defs>
       </svg>
@@ -85,7 +85,7 @@ export default function WhyChooseUs() {
               style={{
                 padding: '40px 32px',
                 textAlign: 'center',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center'

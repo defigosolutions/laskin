@@ -135,7 +135,7 @@ export default function Treatments({ onBookTreatment }) {
     : treatmentsData.filter(t => t.category === activeFilter);
 
   return (
-    <section id="treatments" className="section" style={{ backgroundColor: '#FAF6F4' }}>
+    <section id="treatments" className="section" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
       <div className="container">
         {/* Section Header */}
         <div className="section-header">
@@ -162,7 +162,7 @@ export default function Treatments({ onBookTreatment }) {
                 padding: '10px 24px',
                 borderRadius: 'var(--radius-full)',
                 border: activeFilter === filter ? '1px solid var(--color-gold-base)' : '1px solid var(--color-border-light)',
-                background: activeFilter === filter ? 'var(--color-gold-gradient)' : 'white',
+                background: activeFilter === filter ? 'var(--color-gold-gradient)' : 'rgba(255, 255, 255, 0.05)',
                 color: activeFilter === filter ? 'white' : 'var(--color-text-dark)',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '12px',
@@ -197,7 +197,7 @@ export default function Treatments({ onBookTreatment }) {
                 borderRadius: 'var(--radius-lg)',
                 overflow: 'hidden',
                 height: '100%',
-                backgroundColor: 'white'
+                backgroundColor: 'transparent'
               }}
             >
               {/* Card Image */}
@@ -224,9 +224,9 @@ export default function Treatments({ onBookTreatment }) {
                   position: 'absolute',
                   top: '16px',
                   right: '16px',
-                  backgroundColor: 'rgba(250, 246, 244, 0.9)',
+                  backgroundColor: 'var(--color-glass-dark)',
                   backdropFilter: 'blur(4px)',
-                  color: 'var(--color-gold-dark)',
+                  color: 'white',
                   border: '1px solid var(--color-border-light)',
                   fontFamily: 'var(--font-sans)',
                   fontSize: '9px',
@@ -352,8 +352,8 @@ export default function Treatments({ onBookTreatment }) {
             width: '100%',
             maxWidth: '640px',
             height: '100%',
-            backgroundColor: '#FAFAF9',
-            boxShadow: '-10px 0 40px rgba(42, 36, 33, 0.15)',
+            backgroundColor: 'var(--color-bg-secondary)',
+            boxShadow: '-10px 0 40px rgba(0, 0, 0, 0.5)',
             display: 'flex',
             flexDirection: 'column',
             animation: 'slideLeft 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards',
@@ -370,7 +370,7 @@ export default function Treatments({ onBookTreatment }) {
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                backgroundColor: 'var(--color-glass-dark)',
                 border: '1px solid var(--color-border-light)',
                 cursor: 'pointer',
                 display: 'flex',
@@ -430,7 +430,7 @@ export default function Treatments({ onBookTreatment }) {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: '12px',
-                backgroundColor: 'white',
+                backgroundColor: 'var(--color-glass-white)',
                 border: '1px solid var(--color-border-light)',
                 borderRadius: 'var(--radius-md)',
                 padding: '16px',
@@ -461,7 +461,7 @@ export default function Treatments({ onBookTreatment }) {
 
               {/* Science clinical detail */}
               <div style={{
-                backgroundColor: 'white',
+                backgroundColor: 'var(--color-glass-white)',
                 borderLeft: '3px solid var(--color-gold-base)',
                 padding: '16px 20px',
                 borderRadius: '0 var(--radius-md) var(--radius-md) 0',

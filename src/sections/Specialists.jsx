@@ -54,16 +54,15 @@ export default function Specialists() {
           {specialists.map((s) => (
             <div
               key={s.id}
-              className="reveal-in"
+              className="reveal-in spec-card"
               style={{
                 position: 'relative',
                 borderRadius: 'var(--radius-lg)',
                 overflow: 'hidden',
                 boxShadow: 'var(--shadow-luxury)',
                 aspectRatio: '3/4',
-                backgroundColor: 'white'
+                backgroundColor: 'var(--color-bg-tertiary)'
               }}
-              className="spec-card"
             >
               {/* Specialist Image */}
               <img 
@@ -83,7 +82,7 @@ export default function Specialists() {
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to top, rgba(42, 36, 33, 0.9) 0%, rgba(42, 36, 33, 0.3) 50%, transparent 100%)',
+                background: 'linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.3) 50%, transparent 100%)',
                 zIndex: 5
               }} />
 
@@ -137,9 +136,9 @@ export default function Specialists() {
               <div style={{
                 position: 'absolute',
                 inset: '0',
-                background: 'rgba(42, 36, 33, 0.95)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
+                background: 'var(--color-glass-dark)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
                 padding: '40px 30px',
                 display: 'flex',
                 flexDirection: 'column',

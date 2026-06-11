@@ -82,7 +82,7 @@ export default function BookingForm({ isModal = false, onClose = () => {}, defau
     padding: '36px',
     width: '100%',
     maxWidth: '580px',
-    backgroundColor: '#FAF6F4',
+    backgroundColor: 'var(--color-bg-secondary)',
     border: '1px solid var(--color-border-light)',
     borderRadius: 'var(--radius-lg)',
     boxShadow: 'var(--shadow-luxury)',
@@ -95,7 +95,7 @@ export default function BookingForm({ isModal = false, onClose = () => {}, defau
     padding: '12px 16px',
     borderRadius: 'var(--radius-sm)',
     border: '1px solid var(--color-border-strong)',
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.05)',
     fontFamily: 'var(--font-sans)',
     fontSize: '14px',
     color: 'var(--color-text-dark)',
@@ -118,7 +118,7 @@ export default function BookingForm({ isModal = false, onClose = () => {}, defau
             width: '28px',
             height: '28px',
             borderRadius: '50%',
-            backgroundColor: step >= num ? 'var(--color-gold-base)' : 'white',
+            backgroundColor: step >= num ? 'var(--color-gold-base)' : 'var(--color-bg-tertiary)',
             border: step >= num ? '1px solid var(--color-gold-base)' : '1px solid var(--color-border-strong)',
             color: step >= num ? 'white' : 'var(--color-text-muted)',
             display: 'flex',
@@ -183,7 +183,7 @@ export default function BookingForm({ isModal = false, onClose = () => {}, defau
                     style={{
                       padding: '12px 18px',
                       border: formData.branch === b ? '2px solid var(--color-gold-base)' : '1px solid var(--color-border-strong)',
-                      backgroundColor: formData.branch === b ? 'var(--color-gold-gradient-soft)' : 'white',
+                      backgroundColor: formData.branch === b ? 'var(--color-gold-gradient-soft)' : 'rgba(255,255,255,0.05)',
                       borderRadius: 'var(--radius-sm)',
                       cursor: 'pointer',
                       fontSize: '13px',
@@ -244,7 +244,7 @@ export default function BookingForm({ isModal = false, onClose = () => {}, defau
                     style={{
                       padding: '10px 4px',
                       border: formData.timeSlot === t ? '1px solid var(--color-gold-base)' : '1px solid var(--color-border-strong)',
-                      backgroundColor: formData.timeSlot === t ? 'var(--color-gold-gradient)' : 'white',
+                      backgroundColor: formData.timeSlot === t ? 'var(--color-gold-gradient)' : 'rgba(255,255,255,0.05)',
                       color: formData.timeSlot === t ? 'white' : 'var(--color-text-dark)',
                       borderRadius: 'var(--radius-sm)',
                       cursor: 'pointer',
@@ -375,7 +375,7 @@ export default function BookingForm({ isModal = false, onClose = () => {}, defau
 
             <div style={{
               textAlign: 'left',
-              backgroundColor: '#FAF0EB',
+              backgroundColor: 'var(--color-bg-tertiary)',
               border: '1px dashed var(--color-gold-base)',
               padding: '20px',
               borderRadius: 'var(--radius-md)',
@@ -423,7 +423,7 @@ export default function BookingForm({ isModal = false, onClose = () => {}, defau
       <div style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(42, 36, 33, 0.45)',
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',
         zIndex: 2000,

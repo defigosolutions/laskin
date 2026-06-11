@@ -10,7 +10,7 @@ export default function About() {
         left: '-50px',
         width: '300px',
         height: '400px',
-        background: 'radial-gradient(circle, rgba(246, 230, 227, 0.4) 0%, transparent 80%)',
+        background: 'radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 80%)',
         pointerEvents: 'none',
         zIndex: 1
       }} />

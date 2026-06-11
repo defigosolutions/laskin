@@ -53,7 +53,7 @@ export default function BeforeAfter() {
         right: 0,
         bottom: 0,
         left: 0,
-        background: 'radial-gradient(circle at 10% 80%, rgba(250, 246, 244, 0.45) 0%, transparent 70%)',
+        background: 'radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 70%)',
         pointerEvents: 'none'
       }} />
 
@@ -83,8 +83,8 @@ export default function BeforeAfter() {
                 padding: '12px 20px',
                 borderRadius: 'var(--radius-sm)',
                 border: 'none',
-                background: activeCaseIdx === idx ? 'var(--color-gold-gradient)' : 'rgba(255, 255, 255, 0.7)',
-                color: activeCaseIdx === idx ? 'white' : 'var(--color-text-dark)',
+                background: activeCaseIdx === idx ? 'var(--color-gold-gradient)' : 'var(--color-glass-white)',
+                color: activeCaseIdx === idx ? 'var(--color-bg-primary)' : 'var(--color-text-dark)',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '11px',
                 fontWeight: '600',
@@ -192,7 +192,7 @@ export default function BeforeAfter() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '10px',
-              backgroundColor: 'white',
+              backgroundColor: 'var(--color-glass-white)',
               border: '1px solid var(--color-gold-base)',
               padding: '10px 18px',
               borderRadius: 'var(--radius-sm)'
