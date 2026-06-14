@@ -220,6 +220,9 @@ export interface BeforeAfter {
   treatment?: { id: string; name: string } | null
 }
 
+export type BeforeAfterCase = BeforeAfter;
+
+
 // ─── Reviews ──────────────────────────────────────────────────────────────────
 
 export interface Review {

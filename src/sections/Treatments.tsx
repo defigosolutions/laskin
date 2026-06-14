@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { usePublicTreatments, usePublicCategories } from '../hooks/usePublicApi';
-import type { Treatment } from '../admin/types';
+import type { Treatment } from '../types';
 
 export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: string) => void }) {
   const [activeFilter, setActiveFilter] = useState('all');
