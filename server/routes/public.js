@@ -12,7 +12,14 @@ function formatCentsToUSD(cents) {
 router.get('/categories', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM categories WHERE is_active = true ORDER BY display_order ASC');
-    res.json(result.rows);
+    const formatted = result.rows.map(row => ({
+      id: row.id,
+      slug: row.slug,
+      displayName: row.display_name,
+      displayOrder: row.display_order,
+      isActive: row.is_active
+    }));
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error fetching categories.' });
@@ -23,7 +30,21 @@ router.get('/categories', async (req, res) => {
 router.get('/branches', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM branches WHERE is_active = true ORDER BY display_order ASC');
-    res.json(result.rows);
+    const formatted = result.rows.map(row => ({
+      id: row.id,
+      slug: row.slug,
+      city: row.city,
+      displayName: row.display_name,
+      addressLine: row.address_line,
+      phone: row.phone,
+      email: row.email,
+      timezone: row.timezone,
+      mapX: row.map_x,
+      mapY: row.map_y,
+      displayOrder: row.display_order,
+      isActive: row.is_active
+    }));
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error fetching branches.' });
@@ -101,7 +122,27 @@ router.get('/treatments/:slug', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Treatment not found.' });
     }
-    res.json(result.rows[0]);
+    
+    const row = result.rows[0];
+    const formatted = {
+      id: row.id,
+      slug: row.slug,
+      name: row.name,
+      tagline: row.tagline,
+      categoryId: row.category_id,
+      durationMinutes: row.duration_minutes,
+      recoveryText: row.recovery_text,
+      priceCents: row.price_cents,
+      currency: row.currency,
+      imageUrl: row.image_url,
+      iconKey: row.icon_key,
+      shortDescription: row.short_description,
+      scientificText: row.scientific_text,
+      category: row.category,
+      steps: row.steps
+    };
+    
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error fetching treatment.' });
@@ -123,7 +164,22 @@ router.get('/packages', async (req, res) => {
       WHERE p.is_published = true AND p.deleted_at IS NULL
       ORDER BY p.display_order ASC
     `);
-    res.json(result.rows);
+    
+    const formatted = result.rows.map(row => ({
+      id: row.id,
+      slug: row.slug,
+      name: row.name,
+      tagline: row.tagline,
+      priceCents: row.price_cents,
+      valuePriceCents: row.value_price_cents,
+      currency: row.currency,
+      badge: row.badge,
+      displayOrder: row.display_order,
+      isPublished: row.is_published,
+      inclusions: row.inclusions
+    }));
+    
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error fetching packages.' });
@@ -138,7 +194,21 @@ router.get('/products', async (req, res) => {
       WHERE is_active = true AND deleted_at IS NULL 
       ORDER BY display_order ASC
     `);
-    res.json(result.rows);
+    
+    const formatted = result.rows.map(row => ({
+      id: row.id,
+      slug: row.slug,
+      name: row.name,
+      tagline: row.tagline,
+      priceCents: row.price_cents,
+      currency: row.currency,
+      imageUrl: row.image_url,
+      description: row.description,
+      displayOrder: row.display_order,
+      isActive: row.is_active
+    }));
+    
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error fetching products.' });
@@ -161,7 +231,23 @@ router.get('/specialists', async (req, res) => {
       WHERE s.is_published = true AND s.deleted_at IS NULL
       ORDER BY s.display_order ASC
     `);
-    res.json(result.rows);
+    
+    const formatted = result.rows.map(row => ({
+      id: row.id,
+      slug: row.slug,
+      fullName: row.full_name,
+      role: row.role,
+      credential: row.credential,
+      focus: row.focus,
+      philosophy: row.philosophy,
+      portraitUrl: row.portrait_url,
+      userId: row.user_id,
+      displayOrder: row.display_order,
+      isPublished: row.is_published,
+      branches: row.branches
+    }));
+    
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error fetching specialists.' });
@@ -179,7 +265,26 @@ router.get('/before-after', async (req, res) => {
       WHERE bac.is_published = true
       ORDER BY bac.display_order ASC
     `);
-    res.json(result.rows);
+    
+    const formatted = result.rows.map(row => ({
+      id: row.id,
+      slug: row.slug,
+      title: row.title,
+      subtitle: row.subtitle,
+      treatmentId: row.treatment_id,
+      timelineText: row.timeline_text,
+      primaryIndications: row.primary_indications,
+      therapistNotes: row.therapist_notes,
+      satisfactionText: row.satisfaction_text,
+      ageProfile: row.age_profile,
+      beforeImageUrl: row.before_image_url,
+      afterImageUrl: row.after_image_url,
+      displayOrder: row.display_order,
+      isPublished: row.is_published,
+      treatment: row.treatment
+    }));
+    
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error fetching gallery.' });
@@ -197,7 +302,21 @@ router.get('/reviews', async (req, res) => {
       WHERE r.status = 'approved' AND r.deleted_at IS NULL
       ORDER BY r.display_order ASC
     `);
-    res.json(result.rows);
+    
+    const formatted = result.rows.map(row => ({
+      id: row.id,
+      branchId: row.branch_id,
+      authorName: row.author_name,
+      quote: row.quote,
+      content: row.quote, // Supporting both quote and content
+      rating: row.rating,
+      status: row.status,
+      isFeatured: row.is_featured,
+      displayOrder: row.display_order,
+      branch: row.branch
+    }));
+    
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error fetching reviews.' });

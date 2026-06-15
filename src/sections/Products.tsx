@@ -95,7 +95,7 @@ export default function Products() {
               {/* Product Image */}
               <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '1/1', backgroundColor: '#161616' }}>
                 <img 
-                  src={resolveImageUrl(product.image_url)} 
+                  src={resolveImageUrl(product.imageUrl || product.image_url)} 
                   alt={product.name} 
                   style={{
                     width: '100%',
@@ -153,7 +153,7 @@ export default function Products() {
                     fontWeight: '600', 
                     color: 'var(--color-gold-light)' 
                   }}>
-                    ${(product.price_cents / 100).toFixed(2)}
+                    ${((product.priceCents || product.price_cents) / 100).toFixed(2)}
                   </span>
                   
                   <button 
