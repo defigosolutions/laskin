@@ -25,27 +25,6 @@ export interface TableParams {
   filters?: Record<string, string | string[]>
 }
 
-// ─── Auth ─────────────────────────────────────────────────────────────────────
-
-export type AdminRole = 'super_admin' | 'clinic_manager' | 'specialist' | 'concierge'
-
-export interface AdminUser {
-  id: string
-  email: string
-  fullName: string
-  role: AdminRole
-  branchId: string | null
-  isActive: boolean
-  lastLoginAt: string | null
-  createdAt: string
-  updatedAt: string
-}
-
-export interface AuthState {
-  user: AdminUser | null
-  isAuthenticated: boolean
-  isLoading: boolean
-}
 
 // ─── Branches ─────────────────────────────────────────────────────────────────
 
@@ -183,20 +162,6 @@ export interface Booking {
   specialist: { id: string; slug: string; fullName: string } | null
 }
 
-export interface BookingAuditEntry {
-  id: string
-  action: string
-  fromState: unknown
-  toState: unknown
-  note: string | null
-  createdAt: string
-  actorUser: { id: string; fullName: string; role: string } | null
-}
-
-export interface BookingDetail extends Booking {
-  auditEntries: BookingAuditEntry[]
-}
-
 // ─── Before & After ───────────────────────────────────────────────────────────
 
 export interface BeforeAfter {
@@ -239,94 +204,4 @@ export interface Review {
   updatedAt: string
   deletedAt: string | null
   branch?: { id: string; displayName: string } | null
-}
-
-// ─── Uploads ──────────────────────────────────────────────────────────────────
-
-export type UploadFolder = 'treatments' | 'specialists' | 'before-after' | 'reviews' | 'branches' | 'general'
-
-export interface Upload {
-  id: string
-  publicUrl: string
-  filename: string
-  originalName: string
-  mimeType: string
-  sizeBytes: number
-  folder: UploadFolder
-  uploadedBy: string | null
-  createdAt: string
-}
-
-// ─── Site Settings ────────────────────────────────────────────────────────────
-
-export interface SiteSetting {
-  key: string
-  value: any
-  description: string | null
-  isPublic: boolean
-  updatedAt: string
-  updatedBy: string | null
-}
-
-// ─── Audit Logs ───────────────────────────────────────────────────────────────
-
-export interface AuditLog {
-  id: string
-  userId: string | null
-  userEmail: string | null
-  userRole: string | null
-  entityType: string
-  entityId: string | null
-  action: string
-  oldData: Record<string, any> | null
-  newData: Record<string, any> | null
-  ipAddress: string | null
-  userAgent: string | null
-  createdAt: string
-}
-
-// ─── Dashboard ────────────────────────────────────────────────────────────────
-
-export interface DashboardBooking {
-  id: string
-  reference: string
-  status: string
-  appointmentDate: string
-  startTime: string | null
-  durationMinutes: number
-  source: string | null
-  createdAt: string
-  customer: { id: string; fullName: string; email: string; phone: string | null }
-  branch: { id: string; slug: string; city: string; displayName: string }
-  treatment: { id: string; slug: string; name: string } | null
-  package: { id: string; slug: string; name: string } | null
-  specialist: { id: string; slug: string; fullName: string } | null
-}
-
-export interface DashboardAuditLog {
-  id: string
-  userId: string | null
-  userEmail: string | null
-  userRole: string | null
-  entityType: string
-  entityId: string | null
-  action: string
-  ipAddress: string | null
-  createdAt: string
-}
-
-export interface DashboardStats {
-  stats: {
-    totalBookings: number
-    todayBookings: number
-    pendingBookings: number
-    confirmedBookings: number
-    completedBookings: number
-    totalSpecialists: number
-    totalTreatments: number
-    totalReviews: number
-    bookingsByStatus: Record<string, number>
-  }
-  recentBookings: DashboardBooking[]
-  recentAuditLogs: DashboardAuditLog[]
 }
