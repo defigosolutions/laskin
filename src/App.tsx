@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import About from './sections/About';
@@ -14,11 +14,14 @@ import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 import BookingForm from './components/BookingForm';
 import Products from './sections/Products';
+import AdminPanel from './components/AdminPanel';
 import './App.css';
 
 function App() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [preSelectedTreatment, setPreSelectedTreatment] = useState('');
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/laskin-manage');
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -44,6 +47,14 @@ function App() {
     setBookingModalOpen(false);
     setPreSelectedTreatment('');
   };
+
+  if (isAdminRoute) {
+    return (
+      <Routes>
+        <Route path="/laskin-manage/*" element={<AdminPanel />} />
+      </Routes>
+    );
+  }
 
   return (
     <>

@@ -15,6 +15,13 @@ export function usePublicPackages(params?: { search?: string }) {
   })
 }
 
+export function usePublicProducts() {
+  return useQuery({
+    queryKey: ['public', 'products'],
+    queryFn: () => publicApi.getProducts(),
+  })
+}
+
 export function usePublicSpecialists(params?: { branchId?: string; search?: string }) {
   return useQuery({
     queryKey: ['public', 'specialists', params],

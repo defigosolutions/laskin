@@ -22,3 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Security
+.env
+.env.local
+.env.*.local
+
+# Dependency & Builds
+node_modules/
+dist/
+uploads/
+server/node_modules/
+server/uploads/
+

@@ -1,85 +1,40 @@
 import React from 'react';
+import { usePublicProducts } from '../hooks/usePublicApi';
 
-const productsList = [
-  {
-    id: 'luminous-silk-cleanser',
-    name: 'Luminous Silk Cleanser',
-    category: 'Cleanser',
-    price: 55.00,
-    description: 'A silky, low-foaming medical cleanser infused with botanical extracts that removes impurities while respecting the skin barrier.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.40 AM.jpeg'
-  },
-  {
-    id: 'cellular-hydration-serum',
-    name: 'Cellular Hydration Serum',
-    category: 'Serum',
-    price: 85.00,
-    description: 'A multi-weight hyaluronic acid serum designed to lock in deep hydration at the cellular level for a plump, glowing finish.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.41 AM (1).jpeg'
-  },
-  {
-    id: 'restorative-barrier-cream',
-    name: 'Restorative Barrier Cream',
-    category: 'Moisturizer',
-    price: 90.00,
-    description: 'Intensive repair cream formulated with ceramides and clinical peptides to strengthen, soothe, and recover post-treatment skin.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.41 AM (2).jpeg'
-  },
-  {
-    id: 'radiance-retinol-treatment',
-    name: 'Radiance Retinol Treatment',
-    category: 'Treatment',
-    price: 110.00,
-    description: 'Micro-encapsulated slow-release retinol that refines skin texture, accelerates cell turn-over, and diminishes fine lines.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.41 AM (3).jpeg'
-  },
-  {
-    id: 'vitamin-c-glow-concentrate',
-    name: 'Vitamin C Glow Concentrate',
-    category: 'Serum',
-    price: 95.00,
-    description: 'Potent 15% L-Ascorbic Acid serum with Ferulic Acid to neutralize environmental free radicals and brighten uneven pigment.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.41 AM (4).jpeg'
-  },
-  {
-    id: 'mineral-shield-spf-50',
-    name: 'Mineral Shield SPF 50',
-    category: 'Protection',
-    price: 48.00,
-    description: 'A lightweight, tinted physical sunscreen offering broad-spectrum protection with a flawless, dewy, non-greasy texture.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.41 AM (5).jpeg'
-  },
-  {
-    id: 'absolute-eye-lift-gel',
-    name: 'Absolute Eye Lift Gel',
-    category: 'Eye Care',
-    price: 75.00,
-    description: 'Cooling peptide eye gel designed to drain puffiness, reduce dark circles, and lift structural lines around the orbital area.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.41 AM.jpeg'
-  },
-  {
-    id: 'smoothing-exfoliating-polish',
-    name: 'Smoothing Exfoliating Polish',
-    category: 'Exfoliator',
-    price: 50.00,
-    description: 'Fine micro-polishing clinical scrub utilizing salicylic acid and quartz crystals to sweep away superficial build-up.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.42 AM (1).jpeg'
-  },
-  {
-    id: 'clarifying-salicylic-elixir',
-    name: 'Clarifying Salicylic Elixir',
-    category: 'Treatment',
-    price: 65.00,
-    description: 'Targeted BHA toner that penetrates deep into pores to dissolve sebum, clear blackheads, and prevent active breakouts.',
-    imageUrl: '/products/WhatsApp Image 2026-06-13 at 7.55.42 AM.jpeg'
+// Helper to resolve images (especially local uploads)
+export const resolveImageUrl = (url?: string) => {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('/uploads/')) {
+    const base = import.meta.env.DEV ? 'http://localhost:4000' : '';
+    return `${base}${url}`;
   }
-];
+  return url;
+};
 
 export default function Products() {
+  const { data: productsList, isLoading, isError } = usePublicProducts();
+
   React.useEffect(() => {
     // Scroll to top when loading the products page
     window.scrollTo(0, 0);
   }, []);
+
+  if (isLoading) {
+    return (
+      <section id="products-showcase" className="section" style={{ backgroundColor: 'var(--color-bg-secondary)', minHeight: '100vh', paddingTop: '160px', color: 'var(--color-text-light)', textAlign: 'center' }}>
+        <div className="container">Loading product collection...</div>
+      </section>
+    );
+  }
+
+  if (isError || !productsList) {
+    return (
+      <section id="products-showcase" className="section" style={{ backgroundColor: 'var(--color-bg-secondary)', minHeight: '100vh', paddingTop: '160px', color: 'red', textAlign: 'center' }}>
+        <div className="container">Failed to load products. Please try again.</div>
+      </section>
+    );
+  }
 
   return (
     <section id="products-showcase" className="section" style={{ backgroundColor: 'var(--color-bg-secondary)', minHeight: '100vh', paddingTop: '160px' }}>
@@ -134,13 +89,13 @@ export default function Products() {
                 borderRadius: 'var(--radius-sm)',
                 zIndex: 10
               }}>
-                {product.category}
+                {product.tagline}
               </span>
 
               {/* Product Image */}
               <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '1/1', backgroundColor: '#161616' }}>
                 <img 
-                  src={product.imageUrl} 
+                  src={resolveImageUrl(product.image_url)} 
                   alt={product.name} 
                   style={{
                     width: '100%',
@@ -198,7 +153,7 @@ export default function Products() {
                     fontWeight: '600', 
                     color: 'var(--color-gold-light)' 
                   }}>
-                    ${product.price.toFixed(2)}
+                    ${(product.price_cents / 100).toFixed(2)}
                   </span>
                   
                   <button 

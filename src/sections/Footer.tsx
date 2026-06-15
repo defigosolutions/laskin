@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../components/Logo';
+import { publicApi } from '../lib/api';
 
 export default function Footer({ onBookingClick }) {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (email.trim() && /\S+@\S+\.\S+/.test(email)) {
-      setSubmitted(true);
-      setEmail('');
+      try {
+        await publicApi.subscribeNewsletter(email);
+        setSubmitted(true);
+        setEmail('');
+      } catch (err) {
+        console.error('Newsletter subscribe error:', err);
+      }
     }
   };
 

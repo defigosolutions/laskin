@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { usePublicBranches } from '../hooks/usePublicApi';
+import { publicApi } from '../lib/api';
 
 export default function Contact() {
   const { data: branches, isLoading, isError } = usePublicBranches();
   const [activeBranchId, setActiveBranchId] = useState<string | null>(null);
+
+  // Form states
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [sending, setSending] = useState(false);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (branches && branches.length > 0 && !activeBranchId) {
@@ -13,14 +24,36 @@ export default function Contact() {
 
   const selectedBranch = branches?.find(b => b.id === activeBranchId);
 
+  const handleInquirySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!fullName || !email || !subject || !message) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+    setSending(true);
+    setError(null);
+    setSuccess(null);
+    try {
+      await publicApi.submitInquiry({ fullName, email, phone, subject, message });
+      setSuccess('Your inquiry was successfully sent. Our concierge will contact you shortly.');
+      setFullName('');
+      setEmail('');
+      setPhone('');
+      setSubject('');
+      setMessage('');
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Failed to send message. Please try again.');
+    } finally {
+      setSending(false);
+    }
+  };
+
   // Map arbitrary coordinates for visual map based on branch index
   const getMapCoords = (idx: number) => {
     const coords = [
+      { x: '50%', y: '50%' },
       { x: '25%', y: '45%' },
-      { x: '50%', y: '35%' },
       { x: '75%', y: '55%' },
-      { x: '85%', y: '30%' },
-      { x: '15%', y: '20%' },
     ];
     return coords[idx % coords.length];
   };
@@ -41,10 +74,10 @@ export default function Contact() {
       <div className="container">
         {/* Section Header */}
         <div className="section-header">
-          <span className="section-subtitle">Locations</span>
-          <h2 className="section-title">Our Global Sanctuaries</h2>
+          <span className="section-subtitle">Locations & Inquiries</span>
+          <h2 className="section-title">Get in Touch</h2>
           <p className="section-description">
-            Visit us in the world's most exclusive luxury districts. Schedule a consultation or reach out to our concierge services for priority assistance.
+            Visit our North Haven sanctuary or reach out to us directly through our online concierge inquiry form below.
           </p>
         </div>
 
@@ -64,61 +97,23 @@ export default function Contact() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
-            gap: '60px',
-            alignItems: 'center'
+            gap: '50px',
+            alignItems: 'start'
           }}
           className="contact-grid"
           >
-            {/* Column 1: Addresses & Info */}
-            <div className="reveal-in active">
-              {/* Branch selector buttons */}
-              {branches.length > 1 && (
-                <div style={{
-                  display: 'flex',
-                  backgroundColor: 'var(--color-glass-white)',
-                  border: '1px solid var(--color-border-light)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '6px',
-                  gap: '6px',
-                  marginBottom: '36px',
-                  flexWrap: 'wrap'
-                }}>
-                  {branches.map((b) => (
-                    <button
-                      key={b.id}
-                      onClick={() => setActiveBranchId(b.id)}
-                      style={{
-                        flex: 1,
-                        padding: '12px 10px',
-                        border: 'none',
-                        borderRadius: 'var(--radius-sm)',
-                        backgroundColor: activeBranchId === b.id ? 'var(--color-gold-gradient)' : 'transparent',
-                        color: activeBranchId === b.id ? 'white' : 'var(--color-text-dark)',
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '11px',
-                        fontWeight: activeBranchId === b.id ? '600' : '400',
-                        letterSpacing: '0.12em',
-                        textTransform: 'uppercase',
-                        cursor: 'pointer',
-                        transition: 'var(--transition-smooth)',
-                        minWidth: '100px'
-                      }}
-                    >
-                      {b.displayName}
-                    </button>
-                  ))}
-                </div>
-              )}
-
+            {/* Column 1: Addresses & Map */}
+            <div className="reveal-in active" style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
               {/* Selected Branch Detail Card */}
               {selectedBranch && (
                 <div 
                   key={selectedBranch.id}
                   className="glass-panel"
                   style={{
-                    padding: '40px',
+                    padding: '36px',
                     backgroundColor: 'transparent',
-                    animation: 'fadeIn 0.5s ease-in-out forwards'
+                    animation: 'fadeIn 0.5s ease-in-out forwards',
+                    border: '1px solid var(--color-border-light)'
                   }}
                 >
                   <span style={{
@@ -131,21 +126,21 @@ export default function Contact() {
                     display: 'block',
                     marginBottom: '8px'
                   }}>
-                    {selectedBranch.displayName} Sanctuary
+                    {selectedBranch.displayName}
                   </span>
                   
                   <h3 style={{
                     fontFamily: 'var(--font-serif)',
-                    fontSize: '32px',
+                    fontSize: '28px',
                     color: 'var(--color-text-dark)',
-                    marginBottom: '28px',
+                    marginBottom: '24px',
                     fontWeight: 400
                   }}>
                     LA Skin & Aesthetics
                   </h3>
 
                   {/* Grid of contact details */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold-base)" strokeWidth="1.5" style={{ flexShrink: 0 }}>
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
@@ -164,7 +159,7 @@ export default function Contact() {
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                       </svg>
                       <div>
-                        <span style={{ display: 'block', fontSize: '9px', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', letterSpacing: '0.05em' }}>Priority Lines</span>
+                        <span style={{ display: 'block', fontSize: '9px', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', letterSpacing: '0.05em' }}>Phone</span>
                         <a href={`tel:${selectedBranch.phone}`} style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: 'var(--color-text-dark)', fontWeight: 500 }} className="contact-link">
                           {selectedBranch.phone}
                         </a>
@@ -199,16 +194,14 @@ export default function Contact() {
                   </div>
                 </div>
               )}
-            </div>
 
-            {/* Column 2: Stylized Luxury Map */}
-            <div className="reveal-in active" style={{ animationDelay: '0.2s' }}>
+              {/* Stylized Luxury Map */}
               <div style={{
                 position: 'relative',
                 width: '100%',
-                aspectRatio: '4/3',
+                aspectRatio: '16/10',
                 borderRadius: 'var(--radius-lg)',
-                border: '1px solid var(--color-border-strong)',
+                border: '1px solid var(--color-border-light)',
                 boxShadow: 'var(--shadow-luxury)',
                 overflow: 'hidden',
                 background: 'var(--color-bg-tertiary)',
@@ -217,8 +210,6 @@ export default function Contact() {
                 justifyContent: 'center',
                 alignItems: 'center'
               }}>
-                {/* Stylized custom map canvas drawing using pure CSS grids and vectors */}
-                {/* Grid Lines representing map coordinates */}
                 <div style={{
                   position: 'absolute',
                   inset: 0,
@@ -230,7 +221,6 @@ export default function Contact() {
                   pointerEvents: 'none'
                 }} />
 
-                {/* Decorative abstract land masses */}
                 <div style={{
                   position: 'absolute',
                   width: '180px',
@@ -256,12 +246,11 @@ export default function Contact() {
                   pointerEvents: 'none'
                 }} />
 
-                {/* Vector Lines representing map routing */}
                 <svg style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', stroke: 'var(--color-gold-light)', strokeWidth: '0.8', strokeDasharray: '3 5' }}>
                   <path d="M 120,162 L 240,126 L 360,198" fill="none" />
                 </svg>
 
-                {/* Branch Markers (interactive) */}
+                {/* Branch Pin Marker */}
                 {branches.map((b, idx) => {
                   const coords = getMapCoords(idx);
                   return (
@@ -280,7 +269,6 @@ export default function Contact() {
                         alignItems: 'center'
                       }}
                     >
-                      {/* Outer breathing ring */}
                       <div style={{
                         position: 'absolute',
                         width: '32px',
@@ -291,7 +279,6 @@ export default function Contact() {
                         pointerEvents: 'none'
                       }} />
                       
-                      {/* Pin Point */}
                       <div style={{
                         width: '16px',
                         height: '16px',
@@ -302,7 +289,6 @@ export default function Contact() {
                         transition: 'var(--transition-smooth)'
                       }} />
 
-                      {/* Branch Tag Label */}
                       <span style={{
                         marginTop: '8px',
                         backgroundColor: activeBranchId === b.id ? 'var(--color-text-dark)' : 'var(--color-glass-white)',
@@ -325,7 +311,6 @@ export default function Contact() {
                   );
                 })}
 
-                {/* Map Tag Overlay */}
                 <div style={{
                   position: 'absolute',
                   bottom: '16px',
@@ -342,6 +327,166 @@ export default function Contact() {
                 }}>
                   Sanctuary Locator Grid
                 </div>
+              </div>
+            </div>
+
+            {/* Column 2: Contact message Form */}
+            <div className="reveal-in active" style={{ animationDelay: '0.2s' }}>
+              <div 
+                className="glass-panel"
+                style={{
+                  padding: '36px',
+                  backgroundColor: 'var(--color-glass-dark)',
+                  border: '1px solid var(--color-border-light)',
+                  borderRadius: 'var(--radius-lg)'
+                }}
+              >
+                <h3 style={{
+                  fontFamily: 'var(--font-serif)',
+                  fontSize: '24px',
+                  color: 'var(--color-text-light)',
+                  marginBottom: '24px',
+                  fontWeight: 400
+                }}>
+                  Send Us a Message
+                </h3>
+
+                <form onSubmit={handleInquirySubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {success && (
+                    <div style={{ padding: '12px', backgroundColor: 'rgba(0, 200, 80, 0.1)', border: '1px solid #00c850', borderRadius: 'var(--radius-sm)', color: '#00c850', fontSize: '13px' }}>
+                      {success}
+                    </div>
+                  )}
+
+                  {error && (
+                    <div style={{ padding: '12px', backgroundColor: 'rgba(255, 0, 0, 0.1)', border: '1px solid red', borderRadius: 'var(--radius-sm)', color: 'red', fontSize: '13px' }}>
+                      {error}
+                    </div>
+                  )}
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.08em' }}>Full Name *</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder="Jane Doe"
+                      style={{
+                        padding: '12px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid var(--color-border-light)',
+                        borderRadius: 'var(--radius-sm)',
+                        color: 'white',
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '13px'
+                      }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <label style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.08em' }}>Email *</label>
+                      <input 
+                        type="email" 
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="jane@example.com"
+                        style={{
+                          padding: '12px',
+                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid var(--color-border-light)',
+                          borderRadius: 'var(--radius-sm)',
+                          color: 'white',
+                          fontFamily: 'var(--font-sans)',
+                          fontSize: '13px'
+                        }}
+                      />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <label style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.08em' }}>Phone</label>
+                      <input 
+                        type="tel" 
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="(203) 555-0100"
+                        style={{
+                          padding: '12px',
+                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid var(--color-border-light)',
+                          borderRadius: 'var(--radius-sm)',
+                          color: 'white',
+                          fontFamily: 'var(--font-sans)',
+                          fontSize: '13px'
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.08em' }}>Subject *</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                      placeholder="e.g. Booking inquiry / Custom treatment mapping"
+                      style={{
+                        padding: '12px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid var(--color-border-light)',
+                        borderRadius: 'var(--radius-sm)',
+                        color: 'white',
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '13px'
+                      }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.08em' }}>Message *</label>
+                    <textarea 
+                      required
+                      rows={4}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="How can our aesthetic specialists assist you today?"
+                      style={{
+                        padding: '12px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid var(--color-border-light)',
+                        borderRadius: 'var(--radius-sm)',
+                        color: 'white',
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '13px',
+                        resize: 'none'
+                      }}
+                    />
+                  </div>
+
+                  <button 
+                    type="submit"
+                    disabled={sending}
+                    style={{
+                      background: 'var(--color-gold-gradient)',
+                      border: 'none',
+                      color: 'white',
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: '11px',
+                      fontWeight: '600',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      padding: '14px',
+                      borderRadius: 'var(--radius-sm)',
+                      cursor: sending ? 'default' : 'pointer',
+                      transition: 'var(--transition-smooth)',
+                      marginTop: '10px'
+                    }}
+                  >
+                    {sending ? 'Sending...' : 'Send Message'}
+                  </button>
+                </form>
               </div>
             </div>
           </div>
