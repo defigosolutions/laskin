@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
 
 export default function Navbar({ onBookingClick }) {
@@ -24,12 +25,25 @@ export default function Navbar({ onBookingClick }) {
     { label: 'Why Us', href: '#why-us' },
     { label: 'Specialists', href: '#specialists' },
     { label: 'Packages', href: '#packages' },
+    { label: 'Products', href: '/products', isRoute: true },
     { label: 'Contact', href: '#contact' },
   ];
 
-  const handleLinkClick = (e, href) => {
-    e.preventDefault();
+  const handleLinkClick = (e, href, isRoute = false) => {
     setMobileMenuOpen(false);
+
+    if (isRoute) {
+      // Allow default router link logic for routes
+      return;
+    }
+
+    if (window.location.pathname !== '/') {
+      // If not on homepage, redirect to home with hash
+      window.location.href = '/' + href;
+      return;
+    }
+
+    e.preventDefault();
     const targetElement = document.querySelector(href);
     if (targetElement) {
       const offset = 80; // height of the navbar
@@ -80,28 +94,47 @@ export default function Navbar({ onBookingClick }) {
             <ul style={{
               display: 'flex',
               listStyle: 'none',
-              gap: '32px',
+              gap: '24px',
               alignItems: 'center',
             }}>
               {navLinks.map((link) => (
                 <li key={link.label}>
-                  <a 
-                    href={link.href}
-                    onClick={(e) => handleLinkClick(e, link.href)}
-                    style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      letterSpacing: '0.15em',
-                      textTransform: 'uppercase',
-                      color: 'var(--color-text-dark)',
-                      position: 'relative',
-                      padding: '8px 0',
-                    }}
-                    className="nav-link-hover"
-                  >
-                    {link.label}
-                  </a>
+                  {link.isRoute ? (
+                    <Link
+                      to={link.href}
+                      style={{
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        letterSpacing: '0.15em',
+                        textTransform: 'uppercase',
+                        color: 'var(--color-text-light)',
+                        position: 'relative',
+                        padding: '8px 0',
+                      }}
+                      className="nav-link-hover"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a 
+                      href={link.href}
+                      onClick={(e) => handleLinkClick(e, link.href)}
+                      style={{
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        letterSpacing: '0.15em',
+                        textTransform: 'uppercase',
+                        color: 'var(--color-text-light)',
+                        position: 'relative',
+                        padding: '8px 0',
+                      }}
+                      className="nav-link-hover"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -137,7 +170,7 @@ export default function Navbar({ onBookingClick }) {
               <span style={{
                 width: '100%',
                 height: '1.5px',
-                background: 'var(--color-text-dark)',
+                background: 'var(--color-text-light)',
                 borderRadius: '10px',
                 transition: 'all 0.3s ease',
                 transform: mobileMenuOpen ? 'rotate(45deg) translate(5px, 6px)' : 'none',
@@ -146,7 +179,7 @@ export default function Navbar({ onBookingClick }) {
                 width: '80%',
                 alignSelf: 'flex-end',
                 height: '1.5px',
-                background: 'var(--color-text-dark)',
+                background: 'var(--color-text-light)',
                 borderRadius: '10px',
                 transition: 'all 0.3s ease',
                 opacity: mobileMenuOpen ? 0 : 1,
@@ -154,7 +187,7 @@ export default function Navbar({ onBookingClick }) {
               <span style={{
                 width: '100%',
                 height: '1.5px',
-                background: 'var(--color-text-dark)',
+                background: 'var(--color-text-light)',
                 borderRadius: '10px',
                 transition: 'all 0.3s ease',
                 transform: mobileMenuOpen ? 'rotate(-45deg) translate(5px, -6px)' : 'none',
@@ -202,22 +235,41 @@ export default function Navbar({ onBookingClick }) {
                 transition: `all 0.4s cubic-bezier(0.25, 1, 0.5, 1) ${index * 0.05}s`,
               }}
             >
-              <a 
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: '24px',
-                  letterSpacing: '0.15em',
-                  color: 'var(--color-text-dark)',
-                  textTransform: 'uppercase',
-                  fontWeight: 300,
-                  display: 'block',
-                  padding: '8px 0',
-                }}
-              >
-                {link.label}
-              </a>
+              {link.isRoute ? (
+                <Link
+                  to={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: '24px',
+                    letterSpacing: '0.15em',
+                    color: 'var(--color-text-light)',
+                    textTransform: 'uppercase',
+                    fontWeight: 300,
+                    display: 'block',
+                    padding: '8px 0',
+                  }}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a 
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  style={{
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: '24px',
+                    letterSpacing: '0.15em',
+                    color: 'var(--color-text-light)',
+                    textTransform: 'uppercase',
+                    fontWeight: 300,
+                    display: 'block',
+                    padding: '8px 0',
+                  }}
+                >
+                  {link.label}
+                </a>
+              )}
             </li>
           ))}
         </ul>
@@ -267,7 +319,7 @@ export default function Navbar({ onBookingClick }) {
         }
         
         .nav-link-hover:hover {
-          color: var(--color-gold-dark) !important;
+          color: var(--color-gold-base) !important;
         }
         
         .nav-link-hover:hover::after {

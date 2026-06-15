@@ -72,41 +72,43 @@ export default function Contact() {
             {/* Column 1: Addresses & Info */}
             <div className="reveal-in active">
               {/* Branch selector buttons */}
-              <div style={{
-                display: 'flex',
-                backgroundColor: 'var(--color-glass-white)',
-                border: '1px solid var(--color-border-light)',
-                borderRadius: 'var(--radius-md)',
-                padding: '6px',
-                gap: '6px',
-                marginBottom: '36px',
-                flexWrap: 'wrap'
-              }}>
-                {branches.map((b) => (
-                  <button
-                    key={b.id}
-                    onClick={() => setActiveBranchId(b.id)}
-                    style={{
-                      flex: 1,
-                      padding: '12px 10px',
-                      border: 'none',
-                      borderRadius: 'var(--radius-sm)',
-                      backgroundColor: activeBranchId === b.id ? 'var(--color-gold-gradient)' : 'transparent',
-                      color: activeBranchId === b.id ? 'white' : 'var(--color-text-dark)',
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '11px',
-                      fontWeight: activeBranchId === b.id ? '600' : '400',
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      cursor: 'pointer',
-                      transition: 'var(--transition-smooth)',
-                      minWidth: '100px'
-                    }}
-                  >
-                    {b.displayName}
-                  </button>
-                ))}
-              </div>
+              {branches.length > 1 && (
+                <div style={{
+                  display: 'flex',
+                  backgroundColor: 'var(--color-glass-white)',
+                  border: '1px solid var(--color-border-light)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '6px',
+                  gap: '6px',
+                  marginBottom: '36px',
+                  flexWrap: 'wrap'
+                }}>
+                  {branches.map((b) => (
+                    <button
+                      key={b.id}
+                      onClick={() => setActiveBranchId(b.id)}
+                      style={{
+                        flex: 1,
+                        padding: '12px 10px',
+                        border: 'none',
+                        borderRadius: 'var(--radius-sm)',
+                        backgroundColor: activeBranchId === b.id ? 'var(--color-gold-gradient)' : 'transparent',
+                        color: activeBranchId === b.id ? 'white' : 'var(--color-text-dark)',
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '11px',
+                        fontWeight: activeBranchId === b.id ? '600' : '400',
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        cursor: 'pointer',
+                        transition: 'var(--transition-smooth)',
+                        minWidth: '100px'
+                      }}
+                    >
+                      {b.displayName}
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {/* Selected Branch Detail Card */}
               {selectedBranch && (

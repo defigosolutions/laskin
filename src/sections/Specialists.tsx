@@ -1,228 +1,187 @@
 import React from 'react';
-import { usePublicSpecialists } from '../hooks/usePublicApi';
 
 export default function Specialists() {
-  const { data: specialists, isLoading, isError } = usePublicSpecialists();
-
   return (
     <section id="specialists" className="section" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
       <div className="container">
         {/* Section Header */}
         <div className="section-header">
-          <span className="section-subtitle">Elite Pedigree</span>
-          <h2 className="section-title">Our Medical Specialists</h2>
+          <span className="section-subtitle">Our Medical Specialist</span>
+          <h2 className="section-title">Clinical Expertise</h2>
           <p className="section-description">
-            Entrust your skin health to our board-certified cosmetic physicians and licensed medical clinicians representing elite academic and aesthetic backgrounds.
+            Entrust your skin health to our founder, a board-certified clinical aesthetician representing over a decade of elite aesthetic care and training.
           </p>
         </div>
 
-        {isLoading ? (
-          <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)' }}>
-            Loading specialists...
-          </div>
-        ) : isError ? (
-          <div style={{ textAlign: 'center', padding: '60px 0', color: 'red', fontFamily: 'var(--font-sans)' }}>
-            Failed to load specialists. Please try again later.
-          </div>
-        ) : specialists?.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)' }}>
-            No specialists found.
-          </div>
-        ) : (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '40px'
-          }}
-          className="spec-grid"
-          >
-            {specialists?.map((s) => (
-              <div
-                key={s.id}
-                className="reveal-in spec-card active"
+        {/* Profile Split Layout */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '0.85fr 1.15fr',
+          gap: '60px',
+          alignItems: 'start',
+          marginTop: '50px'
+        }}
+        className="specialist-profile-grid"
+        >
+          {/* Portrait Column */}
+          <div style={{ position: 'relative' }} className="reveal-in active">
+            <div style={{
+              position: 'absolute',
+              top: '16px',
+              left: '16px',
+              width: '100%',
+              height: '100%',
+              border: '1px solid var(--color-gold-base)',
+              borderRadius: 'var(--radius-lg)',
+              pointerEvents: 'none',
+              zIndex: 1
+            }} />
+            <div style={{
+              position: 'relative',
+              borderRadius: 'var(--radius-lg)',
+              overflow: 'hidden',
+              boxShadow: 'var(--shadow-luxury)',
+              zIndex: 2,
+              aspectRatio: '4/5',
+              backgroundColor: 'var(--color-bg-tertiary)'
+            }}>
+              <img 
+                src="/laura.jpeg" 
+                alt="Laura Andrade" 
                 style={{
-                  position: 'relative',
-                  borderRadius: 'var(--radius-lg)',
-                  overflow: 'hidden',
-                  boxShadow: 'var(--shadow-luxury)',
-                  aspectRatio: '3/4',
-                  backgroundColor: 'var(--color-bg-tertiary)'
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block'
                 }}
-              >
-                {/* Specialist Image */}
-                {s.portraitUrl ? (
-                  <img 
-                    src={s.portraitUrl} 
-                    alt={s.fullName} 
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
-                      transition: 'transform 6s ease'
-                    }}
-                    className="spec-image"
-                  />
-                ) : (
-                  <div style={{
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: '#e5e5e5',
-                    color: '#999',
-                    fontFamily: 'var(--font-sans)'
-                  }}>
-                    No Image
-                  </div>
-                )}
-
-                {/* Gradient dark fade layer */}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.3) 50%, transparent 100%)',
-                  zIndex: 5
-                }} />
-
-                {/* Standard text content (bottom-aligned) */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  padding: '30px',
-                  color: 'white',
-                  zIndex: 10,
-                  transition: 'transform 0.4s ease'
-                }}
-                className="spec-details-static"
-                >
-                  <span style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '9px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.15em',
-                    color: 'var(--color-gold-light)',
-                    fontWeight: 600,
-                    display: 'block',
-                    marginBottom: '4px'
-                  }}>
-                    {s.role}
-                  </span>
-                  
-                  <h3 style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: '24px',
-                    color: 'white',
-                    fontWeight: 400,
-                    marginBottom: '6px'
-                  }}>
-                    {s.fullName}
-                  </h3>
-                  
-                  <span style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '11px',
-                    opacity: 0.85,
-                    letterSpacing: '0.05em'
-                  }}>
-                    {s.credential}
-                  </span>
-                </div>
-
-                {/* Hover Overlay Panel (Slides Up or Fades In) */}
-                <div style={{
-                  position: 'absolute',
-                  inset: '0',
-                  background: 'var(--color-glass-dark)',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
-                  padding: '40px 30px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  color: 'white',
-                  zIndex: 15,
-                  opacity: 0,
-                  transition: 'opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
-                  border: '1px solid var(--color-border-strong)',
-                  borderRadius: 'var(--radius-lg)'
-                }}
-                className="spec-hover-overlay"
-                >
-                  <span style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '9px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.15em',
-                    color: 'var(--color-gold-light)',
-                    fontWeight: 600,
-                    display: 'block',
-                    marginBottom: '4px'
-                  }}>
-                    {s.role}
-                  </span>
-                  
-                  <h3 style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: '26px',
-                    color: 'white',
-                    fontWeight: 400,
-                    marginBottom: '2px'
-                  }}>
-                    {s.fullName}
-                  </h3>
-                  
-                  <span style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '11px',
-                    color: 'var(--color-gold-light)',
-                    letterSpacing: '0.05em',
-                    marginBottom: '24px',
-                    display: 'block',
-                    opacity: 0.9
-                  }}>
-                    {s.credential}
-                  </span>
-
-                  <div style={{ width: '40px', height: '1px', background: 'var(--color-gold-light)', marginBottom: '20px' }} />
-
-                  <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-gold-light)', marginBottom: '6px' }}>
-                    Aesthetic Focus
-                  </h4>
-                  
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: 'rgba(255,255,255,0.85)', fontWeight: 300, marginBottom: '24px', lineHeight: '1.5' }}>
-                    {s.focus || 'Comprehensive aesthetic and dermatological treatments.'}
-                  </p>
-
-                  <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-gold-light)', marginBottom: '6px' }}>
-                    Clinical Philosophy
-                  </h4>
-                  
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: 'rgba(255,255,255,0.85)', fontWeight: 300, fontStyle: 'italic', lineHeight: '1.6' }}>
-                    "{s.philosophy || "Dedicated to achieving natural, refined results that enhance each patient's inherent beauty."}"
-                  </p>
-                </div>
-              </div>
-            ))}
+              />
+            </div>
           </div>
-        )}
+
+          {/* Biography Column */}
+          <div className="reveal-in active" style={{ animationDelay: '0.2s' }}>
+            <span style={{
+              fontSize: '11px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.2em',
+              color: 'var(--color-gold-base)',
+              fontWeight: '600',
+              display: 'block',
+              marginBottom: '8px',
+              fontFamily: 'var(--font-sans)'
+            }}>
+              Founder & Lead Medical Specialist
+            </span>
+            <h3 style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: '38px',
+              fontWeight: '400',
+              marginBottom: '24px',
+              color: 'var(--color-text-light)',
+              letterSpacing: '-0.01em'
+            }}>
+              Laura Andrade
+            </h3>
+
+            <p style={{ 
+              fontFamily: 'var(--font-sans)', 
+              fontSize: '15px', 
+              fontWeight: 300, 
+              lineHeight: '1.8', 
+              color: 'rgba(255, 255, 255, 0.75)', 
+              marginBottom: '20px' 
+            }}>
+              With over 13 years of experience in the aesthetics industry, I am passionate about helping clients achieve healthy, radiant skin and renewed confidence. As the founder of LA Skin & Aesthetics, I specialize in advanced skincare treatments, facial rejuvenation, and holistic wellness solutions tailored to each individual's unique needs.
+            </p>
+
+            <p style={{ 
+              fontFamily: 'var(--font-sans)', 
+              fontSize: '15px', 
+              fontWeight: 300, 
+              lineHeight: '1.8', 
+              color: 'rgba(255, 255, 255, 0.75)', 
+              marginBottom: '20px' 
+            }}>
+              Throughout my career, I have pursued extensive advanced training and continuing education, allowing me to stay current with the latest techniques, technologies, and innovations in aesthetic care. My approach combines professional expertise with personalized attention, ensuring every client receives treatments designed to enhance their natural beauty while delivering elegant, balanced, and natural-looking results.
+            </p>
+
+            <p style={{ 
+              fontFamily: 'var(--font-sans)', 
+              fontSize: '15px', 
+              fontWeight: 300, 
+              lineHeight: '1.8', 
+              color: 'rgba(255, 255, 255, 0.75)', 
+              marginBottom: '32px' 
+            }}>
+              At LA Skin & Aesthetics, I believe that beauty begins with healthy skin and self-confidence. My goal is to create a welcoming environment where clients feel cared for, understood, and empowered throughout their aesthetic journey.
+            </p>
+
+            <h4 style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '12px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              fontWeight: '600',
+              marginBottom: '20px',
+              color: 'var(--color-text-light)'
+            }}>
+              Why clients choose LA Skin & Aesthetics:
+            </h4>
+
+            <ul style={{ 
+              listStyle: 'none', 
+              display: 'grid', 
+              gridTemplateColumns: '1fr 1fr', 
+              gap: '16px', 
+              padding: 0, 
+              marginBottom: '36px' 
+            }} className="why-choose-grid">
+              {[
+                'Over 13 years of professional experience.',
+                'Advanced training and ongoing education.',
+                'Personalized treatment plans.',
+                'Advanced skincare and facial rejuvenation services.',
+                'Innovative aesthetic technologies.',
+                'Warm, professional, client-centered care.'
+              ].map((item, idx) => (
+                <li key={idx} style={{
+                  display: 'flex',
+                  gap: '12px',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontWeight: 300,
+                  fontFamily: 'var(--font-sans)'
+                }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold-base)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div style={{ height: '1px', background: 'var(--color-border-light)', marginBottom: '24px' }} />
+
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontStyle: 'italic', color: 'rgba(255, 255, 255, 0.8)', fontWeight: 300, marginBottom: '8px' }}>
+              Dedicated to excellence, natural beauty, and the well-being of every client.
+            </p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>
+              * Professional certifications are available for review at the clinic.
+            </p>
+          </div>
+        </div>
       </div>
 
       <style>{`
-        .spec-card:hover .spec-image {
-          transform: scale(1.05);
-        }
-        
-        .spec-card:hover .spec-hover-overlay {
-          opacity: 1 !important;
-        }
-        
-        @media (max-width: 768px) {
-          .spec-grid {
+        @media (max-width: 900px) {
+          .specialist-profile-grid {
             grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+          .why-choose-grid {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
           }
         }
       `}</style>

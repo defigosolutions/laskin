@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from '../components/Logo';
 
 export default function Footer({ onBookingClick }) {
@@ -14,6 +15,10 @@ export default function Footer({ onBookingClick }) {
   };
 
   const handleLinkClick = (e, href) => {
+    if (window.location.pathname !== '/') {
+      window.location.href = '/' + href;
+      return;
+    }
     e.preventDefault();
     const targetElement = document.querySelector(href);
     if (targetElement) {
@@ -54,10 +59,22 @@ export default function Footer({ onBookingClick }) {
               fontWeight: 300,
               lineHeight: '1.8',
               color: 'rgba(255, 255, 255, 0.6)',
-              marginTop: '24px',
+              marginTop: '20px',
               maxWidth: '280px'
             }}>
               A premium clinical merger of medical diagnostics and five-star relaxation. Radiate your natural energy.
+            </p>
+            <p style={{
+              fontSize: '13px',
+              fontWeight: 400,
+              lineHeight: '1.6',
+              color: 'var(--color-gold-light)',
+              marginTop: '16px',
+              maxWidth: '280px',
+              fontStyle: 'normal'
+            }}>
+              132 Middletown Ave, Suite 10,<br />
+              North Haven, CT
             </p>
           </div>
 
@@ -75,11 +92,10 @@ export default function Footer({ onBookingClick }) {
               Therapies
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '13px', fontWeight: 300 }}>
-              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Hydra Facial</a></li>
-              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Chemical Peel</a></li>
-              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Laser Treatment</a></li>
-              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Anti-Aging Therapy</a></li>
-              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Skin Rejuvenation</a></li>
+              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Hydrafacial</a></li>
+              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Basic Facial Cleansing</a></li>
+              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Advanced Skin Treatments</a></li>
+              <li><a href="#treatments" onClick={(e) => handleLinkClick(e, '#treatments')} className="footer-link">Laser Hair Removal</a></li>
             </ul>
           </div>
 
@@ -99,8 +115,9 @@ export default function Footer({ onBookingClick }) {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '13px', fontWeight: 300 }}>
               <li><a href="#about" onClick={(e) => handleLinkClick(e, '#about')} className="footer-link">About Clinic</a></li>
               <li><a href="#why-us" onClick={(e) => handleLinkClick(e, '#why-us')} className="footer-link">Why Choose Us</a></li>
-              <li><a href="#specialists" onClick={(e) => handleLinkClick(e, '#specialists')} className="footer-link">Specialists</a></li>
+              <li><a href="#specialists" onClick={(e) => handleLinkClick(e, '#specialists')} className="footer-link">Specialist</a></li>
               <li><a href="#packages" onClick={(e) => handleLinkClick(e, '#packages')} className="footer-link">Packages</a></li>
+              <li><Link to="/products" className="footer-link">Products Showcase</Link></li>
               <li><a href="#contact" onClick={(e) => handleLinkClick(e, '#contact')} className="footer-link">Direct Contacts</a></li>
             </ul>
           </div>
@@ -126,7 +143,7 @@ export default function Footer({ onBookingClick }) {
               <div style={{
                 padding: '12px 16px',
                 border: '1px solid var(--color-gold-base)',
-                backgroundColor: 'rgba(194, 155, 120, 0.1)',
+                backgroundColor: 'rgba(212, 175, 55, 0.1)',
                 borderRadius: 'var(--radius-sm)',
                 fontSize: '12px',
                 color: 'var(--color-gold-light)',
@@ -216,6 +233,7 @@ export default function Footer({ onBookingClick }) {
         .footer-link {
           color: rgba(255, 255, 255, 0.6) !important;
           transition: var(--transition-fast);
+          text-decoration: none;
         }
         .footer-link:hover {
           color: var(--color-gold-light) !important;
@@ -233,6 +251,7 @@ export default function Footer({ onBookingClick }) {
         
         .footer-link-bottom {
           color: rgba(255, 255, 255, 0.4) !important;
+          text-decoration: none;
         }
         .footer-link-bottom:hover {
           color: var(--color-gold-light) !important;

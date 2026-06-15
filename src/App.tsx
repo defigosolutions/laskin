@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import About from './sections/About';
@@ -12,6 +13,7 @@ import BookingCTA from './sections/BookingCTA';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 import BookingForm from './components/BookingForm';
+import Products from './sections/Products';
 import './App.css';
 
 function App() {
@@ -43,20 +45,6 @@ function App() {
     setPreSelectedTreatment('');
   };
 
-  const handleScrollToBooking = (treatmentName = '') => {
-    setPreSelectedTreatment(treatmentName);
-    const targetElement = document.querySelector('#booking');
-    if (targetElement) {
-      const offset = 80;
-      const elementPosition = targetElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <>
       {/* Navigation Header */}
@@ -64,35 +52,43 @@ function App() {
 
       {/* Main Luxury Page Flow */}
       <main>
-        {/* 1. Hero Section */}
-        <Hero onBookingClick={() => openBookingModal('')} />
+        <Routes>
+          <Route path="/" element={
+            <>
+              {/* 1. Hero Section */}
+              <Hero onBookingClick={() => openBookingModal('')} />
 
-        {/* 2. About Our Clinic */}
-        <About />
+              {/* 2. About Our Clinic */}
+              <About />
 
-        {/* 3. Featured Treatments (interactive details drawer) */}
-        <Treatments onBookTreatment={(tName) => openBookingModal(tName)} />
+              {/* 3. Featured Treatments (interactive details drawer) */}
+              <Treatments onBookTreatment={(tName) => openBookingModal(tName)} />
 
-        {/* 4. Before & After Gallery (touch compare slider) */}
-        <BeforeAfter />
+              {/* 4. Before & After Gallery (touch compare slider) */}
+              <BeforeAfter />
 
-        {/* 5. Why Choose Us */}
-        <WhyChooseUs />
+              {/* 5. Why Choose Us */}
+              <WhyChooseUs />
 
-        {/* 6. Meet Our Specialists (hover credentials cards) */}
-        <Specialists />
+              {/* 6. Meet Our Specialists */}
+              <Specialists />
 
-        {/* 7. Treatment Packages (invitations grid) */}
-        <Packages onReservePackage={(pkgName) => openBookingModal(pkgName)} />
+              {/* 7. Treatment Packages (invitations grid) */}
+              <Packages onReservePackage={(pkgName) => openBookingModal(pkgName)} />
 
-        {/* 8. Client Reviews (auto slide testimonial carousel) */}
-        <Reviews />
+              {/* 8. Client Reviews (auto slide testimonial carousel) */}
+              <Reviews />
 
-        {/* 9. Appointment Booking CTA (inline scheduler form) */}
-        <BookingCTA defaultTreatmentId={preSelectedTreatment} />
+              {/* 9. Appointment Booking CTA (inline scheduler form) */}
+              <BookingCTA defaultTreatmentId={preSelectedTreatment} />
 
-        {/* 10. Contact & Coordinates Section (stylized vector maps) */}
-        <Contact />
+              {/* 10. Contact & Coordinates Section (stylized vector maps) */}
+              <Contact />
+            </>
+          } />
+
+          <Route path="/products" element={<Products />} />
+        </Routes>
       </main>
 
       {/* 11. Luxury Footer Directory */}
