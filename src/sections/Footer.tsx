@@ -53,7 +53,9 @@ export default function Footer({ onBookingClick }) {
         >
           {/* Col 1: Large Brand Info */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }} className="footer-col-brand">
-            <Logo variant="vertical" height={56} className="footer-logo-override" />
+            <Link to="/" onClick={(e) => handleLinkClick(e, '#')} style={{ display: 'block' }}>
+              <Logo variant="vertical" height={56} className="footer-logo-override" />
+            </Link>
             <p style={{
               fontSize: '13px',
               fontWeight: 300,

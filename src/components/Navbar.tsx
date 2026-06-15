@@ -85,9 +85,9 @@ export default function Navbar({ onBookingClick }) {
           width: '100%',
         }}>
           {/* Logo Brand */}
-          <a href="#" onClick={(e) => handleLinkClick(e, '#')} style={{ display: 'flex', alignItems: 'center' }}>
+          <Link to="/" onClick={(e) => handleLinkClick(e, '#')} style={{ display: 'flex', alignItems: 'center' }}>
             <Logo variant="horizontal" height={isScrolled ? 42 : 50} />
-          </a>
+          </Link>
 
           {/* Desktop Navigation Links */}
           <nav style={{ display: 'flex', alignItems: 'center' }} className="desktop-only">
@@ -215,9 +215,9 @@ export default function Navbar({ onBookingClick }) {
         alignItems: 'center',
         padding: '40px',
       }}>
-        <div style={{ marginBottom: '40px' }}>
+        <Link to="/" onClick={(e) => handleLinkClick(e, '#')} style={{ marginBottom: '40px', display: 'block' }}>
           <Logo variant="vertical" height={60} />
-        </div>
+        </Link>
         <ul style={{
           listStyle: 'none',
           textAlign: 'center',
