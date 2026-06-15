@@ -35,3 +35,6 @@ uploads/
 server/node_modules/
 server/uploads/
 
+# Production deploy script
+deploy-prod.sh
+
