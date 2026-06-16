@@ -81,17 +81,7 @@ export const publicApi = {
     return res.data;
   },
 
-  // Bookings Availability
-  getAvailability: async (params: { branchId: string; date: string }): Promise<any[]> => {
-    const res = await publicApiClient.get('/public/availability', { params });
-    return res.data;
-  },
 
-  // Create Booking
-  createBooking: async (payload: any): Promise<any> => {
-    const res = await publicApiClient.post('/public/bookings', payload);
-    return res.data;
-  },
 
   // Submit Contact Inquiry
   submitInquiry: async (payload: { fullName: string; email: string; phone?: string; subject: string; message: string }): Promise<any> => {

@@ -67,16 +67,3 @@ export function usePublicCategories() {
   })
 }
 
-export function useAvailability(params: { branchId: string; date: string }) {
-  return useQuery({
-    queryKey: ['public', 'availability', params],
-    queryFn: () => publicApi.getAvailability(params),
-    enabled: !!params.branchId && !!params.date,
-  })
-}
-
-export function useCreateBooking() {
-  return useMutation({
-    mutationFn: publicApi.createBooking,
-  })
-}
