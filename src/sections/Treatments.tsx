@@ -258,7 +258,9 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
           WebkitBackdropFilter: 'blur(10px)',
           zIndex: 1500,
           display: 'flex',
-          justifyContent: 'flex-end',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
         }}
         onClick={(e) => {
           if (e.target === e.currentTarget) setSelectedTreatment(null);
@@ -267,12 +269,13 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
           <div style={{
             width: '100%',
             maxWidth: '640px',
-            height: '100%',
+            maxHeight: '90vh',
+            borderRadius: 'var(--radius-lg)',
             backgroundColor: 'var(--color-bg-secondary)',
-            boxShadow: '-10px 0 40px rgba(0, 0, 0, 0.5)',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.6)',
             display: 'flex',
             flexDirection: 'column',
-            animation: 'slideLeft 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards',
+            animation: 'fadeIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards',
             position: 'relative',
             overflowY: 'auto'
           }}>
@@ -281,18 +284,18 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
               onClick={() => setSelectedTreatment(null)}
               style={{
                 position: 'absolute',
-                top: '24px',
-                left: '24px',
+                top: '16px',
+                right: '16px',
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                backgroundColor: 'var(--color-glass-dark)',
-                border: '1px solid var(--color-border-light)',
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'var(--color-text-dark)',
+                color: 'white',
                 zIndex: 20,
                 boxShadow: 'var(--shadow-luxury)'
               }}
@@ -335,7 +338,7 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
                 Aesthetic Clinical Care
               </span>
               
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '38px', color: 'var(--color-text-dark)', marginBottom: '6px', fontWeight: 400 }}>
+              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '38px', color: 'var(--color-text-light)', marginBottom: '6px', fontWeight: 400 }}>
                 {selectedTreatment.name}
               </h2>
               
@@ -344,33 +347,33 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
               </p>
 
               {/* Stats / Metadata pills */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '12px',
-                backgroundColor: 'var(--color-glass-white)',
-                border: '1px solid var(--color-border-light)',
-                borderRadius: 'var(--radius-md)',
-                padding: '16px',
-                marginBottom: '32px',
-                textAlign: 'center'
-              }}>
-                <div>
-                  <span style={{ display: 'block', fontSize: '9px', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', letterSpacing: '0.05em' }}>Pricing</span>
-                  <strong style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--color-text-dark)' }}>${(selectedTreatment.priceCents / 100).toFixed(2)}</strong>
-                </div>
-                <div style={{ borderLeft: '1px solid var(--color-border-light)', borderRight: '1px solid var(--color-border-light)' }}>
-                  <span style={{ display: 'block', fontSize: '9px', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', letterSpacing: '0.05em' }}>Duration</span>
-                  <strong style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--color-text-dark)' }}>{selectedTreatment.durationMinutes} Mins</strong>
-                </div>
-                <div>
-                  <span style={{ display: 'block', fontSize: '9px', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', letterSpacing: '0.05em' }}>Recovery</span>
-                  <strong style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', color: 'var(--color-text-dark)' }}>{selectedTreatment.recoveryText || 'Minimal'}</strong>
-                </div>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gap: '12px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '16px',
+                  marginBottom: '32px',
+                  textAlign: 'center'
+                }}>
+                  <div>
+                    <span style={{ display: 'block', fontSize: '9px', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', letterSpacing: '0.05em' }}>Pricing</span>
+                    <strong style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--color-text-light)' }}>${(selectedTreatment.priceCents / 100).toFixed(2)}</strong>
+                  </div>
+                  <div style={{ borderLeft: '1px solid rgba(255, 255, 255, 0.1)', borderRight: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                    <span style={{ display: 'block', fontSize: '9px', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', letterSpacing: '0.05em' }}>Duration</span>
+                    <strong style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--color-text-light)' }}>{selectedTreatment.durationMinutes} Mins</strong>
+                  </div>
+                  <div>
+                    <span style={{ display: 'block', fontSize: '9px', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', letterSpacing: '0.05em' }}>Recovery</span>
+                    <strong style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', color: 'var(--color-text-light)' }}>{selectedTreatment.recoveryText || 'Minimal'}</strong>
+                  </div>
               </div>
 
               {/* Description */}
-              <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', textTransform: 'uppercase', color: 'var(--color-text-dark)', letterSpacing: '0.1em', marginBottom: '8px', fontWeight: 600 }}>
+              <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', textTransform: 'uppercase', color: 'var(--color-text-light)', letterSpacing: '0.1em', marginBottom: '8px', fontWeight: 600 }}>
                 Procedural Overview
               </h4>
               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: 'var(--color-text-muted)', fontWeight: 300, lineHeight: '1.7', marginBottom: '24px' }}>
@@ -380,7 +383,7 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
               {/* Science clinical detail */}
               {selectedTreatment.scientificText && (
                 <div style={{
-                  backgroundColor: 'var(--color-glass-white)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
                   borderLeft: '3px solid var(--color-gold-base)',
                   padding: '16px 20px',
                   borderRadius: '0 var(--radius-md) var(--radius-md) 0',
@@ -398,7 +401,7 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
               {/* Step by step procedure */}
               {selectedTreatment.steps && selectedTreatment.steps.length > 0 && (
                 <>
-                  <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', textTransform: 'uppercase', color: 'var(--color-text-dark)', letterSpacing: '0.1em', marginBottom: '14px', fontWeight: 600 }}>
+                  <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', textTransform: 'uppercase', color: 'var(--color-text-light)', letterSpacing: '0.1em', marginBottom: '14px', fontWeight: 600 }}>
                     Step-by-Step Experience
                   </h4>
                   <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '40px', padding: 0 }}>
@@ -443,9 +446,9 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
       )}
 
       <style>{`
-        @keyframes slideLeft {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
         }
         
         .luxury-hover-card:hover .card-image {

@@ -109,7 +109,7 @@ export default function Reviews() {
                       fontSize: '22px',
                       fontStyle: 'italic',
                       lineHeight: '1.8',
-                      color: 'var(--color-text-dark)',
+                      color: 'var(--color-text-light)',
                       fontWeight: 300,
                       marginBottom: '28px',
                       maxWidth: '700px',
@@ -128,7 +128,7 @@ export default function Reviews() {
                         fontWeight: 600,
                         textTransform: 'uppercase',
                         letterSpacing: '0.15em',
-                        color: 'var(--color-text-dark)',
+                        color: 'var(--color-text-light)',
                         marginBottom: '4px'
                       }}>
                         {r.authorName}

@@ -9,17 +9,13 @@ import WhyChooseUs from './sections/WhyChooseUs';
 import Specialists from './sections/Specialists';
 import Packages from './sections/Packages';
 import Reviews from './sections/Reviews';
-import BookingCTA from './sections/BookingCTA';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
-import BookingForm from './components/BookingForm';
 import Products from './sections/Products';
 import AdminPanel from './components/AdminPanel';
 import './App.css';
 
 function App() {
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
-  const [preSelectedTreatment, setPreSelectedTreatment] = useState('');
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/laskin-manage');
 
@@ -39,13 +35,7 @@ function App() {
   }, []);
 
   const openBookingModal = (treatmentName = '') => {
-    setPreSelectedTreatment(treatmentName);
-    setBookingModalOpen(true);
-  };
-
-  const closeBookingModal = () => {
-    setBookingModalOpen(false);
-    setPreSelectedTreatment('');
+    window.open('https://booksy.com/en-us/1467369_la-skin-aesthetics_skin-care_15431_north-haven', '_blank');
   };
 
   if (isAdminRoute) {
@@ -90,10 +80,7 @@ function App() {
               {/* 8. Client Reviews (auto slide testimonial carousel) */}
               <Reviews />
 
-              {/* 9. Appointment Booking CTA (inline scheduler form) */}
-              <BookingCTA defaultTreatmentId={preSelectedTreatment} />
-
-              {/* 10. Contact & Coordinates Section (stylized vector maps) */}
+              {/* 9. Contact & Coordinates Section (stylized vector maps) */}
               <Contact />
             </>
           } />
@@ -104,15 +91,6 @@ function App() {
 
       {/* 11. Luxury Footer Directory */}
       <Footer onBookingClick={() => openBookingModal('')} />
-
-      {/* Full-Screen Booking Scheduler Modal Overlay */}
-      {bookingModalOpen && (
-        <BookingForm 
-          isModal={true} 
-          onClose={closeBookingModal} 
-          defaultTreatmentId={preSelectedTreatment} 
-        />
-      )}
     </>
   );
 }

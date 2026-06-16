@@ -117,7 +117,7 @@ export default function BeforeAfter() {
                   <h3 style={{
                     fontFamily: 'var(--font-serif)',
                     fontSize: '36px',
-                    color: 'var(--color-text-dark)',
+                    color: 'var(--color-text-light)',
                     marginBottom: '4px',
                     fontWeight: 400
                   }}>
@@ -136,6 +136,10 @@ export default function BeforeAfter() {
                     {currentCase.subtitle || currentCase.treatment?.name}
                   </span>
 
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: 'var(--color-text-light)', lineHeight: '1.6', marginBottom: '28px' }}>
+                    Experience the transformative power of our customized skincare treatments. We address individual concerns with precision and care to reveal your skin's natural radiance and optimal health.
+                  </p>
+
                   {/* Diagnostic stats list */}
                   <div style={{
                     display: 'flex',
@@ -145,17 +149,17 @@ export default function BeforeAfter() {
                   }}>
                     <div style={{ borderBottom: '1px solid var(--color-border-light)', paddingBottom: '10px' }}>
                       <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', color: 'var(--color-text-muted)', letterSpacing: '0.05em' }}>Timeline</span>
-                      <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: '500', color: 'var(--color-text-dark)' }}>{currentCase.timelineText}</p>
+                      <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: '500', color: 'var(--color-text-light)' }}>{currentCase.timelineText}</p>
                     </div>
 
                     <div style={{ borderBottom: '1px solid var(--color-border-light)', paddingBottom: '10px' }}>
                       <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', color: 'var(--color-text-muted)', letterSpacing: '0.05em' }}>Patient Age Profile</span>
-                      <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: '500', color: 'var(--color-text-dark)' }}>{currentCase.ageProfile}</p>
+                      <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: '500', color: 'var(--color-text-light)' }}>{currentCase.ageProfile}</p>
                     </div>
 
                     <div style={{ borderBottom: '1px solid var(--color-border-light)', paddingBottom: '10px' }}>
                       <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', textTransform: 'uppercase', color: 'var(--color-text-muted)', letterSpacing: '0.05em' }}>Primary Indications</span>
-                      <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: '400', color: 'var(--color-text-dark)', lineHeight: '1.4' }}>{currentCase.primaryIndications}</p>
+                      <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: '400', color: 'var(--color-text-light)', lineHeight: '1.4' }}>{currentCase.primaryIndications}</p>
                     </div>
 
                     {currentCase.therapistNotes && (

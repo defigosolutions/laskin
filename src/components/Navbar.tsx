@@ -67,7 +67,7 @@ export default function Navbar({ onBookingClick }) {
         maxWidth: isScrolled ? '1200px' : '100%',
         zIndex: 1000,
         height: isScrolled ? '70px' : '95px',
-        background: isScrolled ? 'var(--color-glass-dark)' : 'rgba(10, 10, 10, 0.4)',
+        background: isScrolled ? '#000000' : 'linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 100%)',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
         border: isScrolled ? '1px solid var(--color-border-light)' : '1px solid transparent',

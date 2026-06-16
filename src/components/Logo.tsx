@@ -6,8 +6,9 @@ export default function Logo({ variant = 'horizontal', className = '', height = 
       <img 
         src="/logo.jpeg" 
         alt="LA Skin & Aesthetics Logo" 
-        style={{ height: '100%', width: 'auto', objectFit: 'contain', borderRadius: '4px' }} 
+        style={{ height: '100%', width: 'auto', objectFit: 'contain' }} 
       />
     </div>
   );
 }
+
