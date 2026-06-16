@@ -4,7 +4,7 @@ import { usePublicSiteSettings } from '../hooks/usePublicApi';
 export default function About() {
   const { data: settings } = usePublicSiteSettings();
 
-  const aboutImage = settings?.aboutImageUrl || "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=800&auto=format&fit=crop";
+  const aboutImage = settings?.aboutImageUrl || "/images/hero/about_bg.jpg";
   const aboutTitle = settings?.aboutTitle || "A Heritage of Rejuvenation & Timeless Harmony";
   const aboutDescription1 = settings?.aboutDescription1 || "Founded in Beverly Hills and expanded to global luxury destinations in London and Dubai, <strong>LA Skin & Aesthetics</strong> combines cutting-edge clinical technology with a serene, high-society medical spa atmosphere.";
   const aboutDescription2 = settings?.aboutDescription2 || "Our clinical philosophy centers around custom anatomical skin mapping, focusing on restoring optimal cellular health and highlighting your natural features without looking artificial or overdone.";
