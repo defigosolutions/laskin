@@ -42,11 +42,11 @@ export default function Products() {
     setSubmitStatus(null);
     
     try {
-      await publicApi.submitInquiry({
+      await publicApi.submitProductInquiry({
         fullName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
-        subject: `Product Inquiry: ${selectedProduct.name}`,
+        productId: selectedProduct.id,
         message: `I am interested in purchasing ${selectedProduct.name}. Please contact me regarding pricing and availability.`
       });
       

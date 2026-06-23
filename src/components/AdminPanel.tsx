@@ -39,6 +39,7 @@ export default function AdminPanel() {
   const [beforeAfters, setBeforeAfters] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);
+  const [productInquiries, setProductInquiries] = useState<any[]>([]);
   const [subscribers, setSubscribers] = useState<any[]>([]);
   const [settings, setSettings] = useState<any>({});
 
@@ -49,6 +50,7 @@ export default function AdminPanel() {
   const [editingItem, setEditingItem] = useState<any>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerType, setDrawerType] = useState(''); // 'treatment' | 'package' | 'product' | 'booking' | 'review' | 'beforeafter' | 'specialist'
+  const [selectedProductInquiry, setSelectedProductInquiry] = useState<any>(null);
 
   // SMTP Settings details
   const [smtpSettings, setSmtpSettings] = useState<any>({});
@@ -158,6 +160,9 @@ export default function AdminPanel() {
       } else if (activeTab === 'inquiries') {
         const res = await api.get('/admin/contact-inquiries');
         setInquiries(res.data);
+      } else if (activeTab === 'product_inquiries') {
+        const res = await api.get('/admin/product-inquiries');
+        setProductInquiries(res.data);
       } else if (activeTab === 'subscribers') {
         const res = await api.get('/admin/newsletter/subscribers');
         setSubscribers(res.data);
@@ -452,6 +457,7 @@ export default function AdminPanel() {
             { id: 'beforeafter', label: 'Gallery cases', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
             { id: 'reviews', label: 'Reviews Moderation', icon: 'M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z' },
             { id: 'inquiries', label: 'Contact Inquiries', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+            { id: 'product_inquiries', label: 'Product Inquiries', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
             { id: 'subscribers', label: 'Newsletter Registry', icon: 'M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206' },
             { id: 'settings', label: 'System Settings', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' }
           ].map(tab => (
@@ -1119,6 +1125,80 @@ export default function AdminPanel() {
             )}
 
             {/* ==========================================
+                TAB: PRODUCT INQUIRIES
+                ========================================== */}
+            {activeTab === 'product_inquiries' && (
+              <div style={{ backgroundColor: '#0a0a0a', border: '1px solid #1a1a1a', borderRadius: '8px', padding: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                  <span style={{ fontSize: '14px', color: '#d4af37' }}>Product Inquiries ({productInquiries.length} entries)</span>
+                  <button 
+                    onClick={() => exportToCSV(productInquiries, 'product_inquiries')}
+                    style={{ padding: '8px 16px', backgroundColor: '#111', border: '1px solid #222', color: '#d4af37', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}
+                  >
+                    Export to CSV
+                  </button>
+                </div>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
+                      <th style={{ paddingBottom: '12px' }}>Date</th>
+                      <th style={{ paddingBottom: '12px' }}>Client Info</th>
+                      <th style={{ paddingBottom: '12px' }}>Product</th>
+                      <th style={{ paddingBottom: '12px', textAlign: 'right' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {productInquiries.map(inq => (
+                      <tr 
+                        key={inq.id} 
+                        style={{ borderBottom: '1px solid #151515', opacity: inq.is_read ? 0.7 : 1, cursor: 'pointer', transition: 'background-color 0.2s' }}
+                        onClick={() => setSelectedProductInquiry(inq)}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#111'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      >
+                        <td style={{ padding: '16px 0', color: '#aaa' }}>{new Date(inq.created_at).toLocaleDateString()}</td>
+                        <td style={{ padding: '16px 0' }}>
+                          <div style={{ fontWeight: 'bold', color: 'white' }}>{inq.full_name}</div>
+                          <div style={{ fontSize: '11px', color: '#888' }}>{inq.email}</div>
+                          {inq.phone && <div style={{ fontSize: '11px', color: '#888' }}>{inq.phone}</div>}
+                        </td>
+                        <td style={{ padding: '16px 0', fontWeight: 'bold', color: '#d4af37' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {inq.product?.image_url && <img src={resolveImageUrl(inq.product.image_url)} alt="Product" style={{ width: '30px', height: '30px', objectFit: 'cover', borderRadius: '4px' }} />}
+                            {inq.product?.name || 'Unknown Product'}
+                          </div>
+                        </td>
+                        <td style={{ padding: '16px 0', textAlign: 'right' }} onClick={(e) => e.stopPropagation()}>
+                          <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                            <button 
+                              onClick={async () => {
+                                await api.patch(`/admin/product-inquiries/${inq.id}/read`, { isRead: !inq.is_read });
+                                loadTabData();
+                              }}
+                              style={{ padding: '4px 8px', backgroundColor: '#222', color: '#d4af37', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
+                            >
+                              {inq.is_read ? 'Mark Unread' : 'Mark Read'}
+                            </button>
+                            <button 
+                              onClick={async () => {
+                                if (!confirm('Delete this product inquiry?')) return;
+                                await api.delete(`/admin/product-inquiries/${inq.id}`);
+                                loadTabData();
+                              }}
+                              style={{ padding: '4px 8px', backgroundColor: 'rgba(255,0,0,0.1)', color: 'red', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {/* ==========================================
                 TAB: NEWSLETTER REGISTRY
                 ========================================== */}
             {activeTab === 'subscribers' && (
@@ -1536,6 +1616,91 @@ export default function AdminPanel() {
             >
               Cancel
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Product Inquiry Popup Modal */}
+      {selectedProductInquiry && (
+        <div 
+          onClick={() => setSelectedProductInquiry(null)}
+          style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+            padding: '20px'
+          }}
+        >
+          <div 
+            onClick={e => e.stopPropagation()}
+            style={{
+              backgroundColor: '#0a0a0a',
+              border: '1px solid #222',
+              borderRadius: '12px',
+              width: '100%',
+              maxWidth: '600px',
+              padding: '32px',
+              position: 'relative',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+            }}
+          >
+            <button 
+              onClick={() => setSelectedProductInquiry(null)}
+              style={{
+                position: 'absolute',
+                top: '20px', right: '20px',
+                background: 'none',
+                border: 'none',
+                color: '#aaa',
+                cursor: 'pointer',
+                fontSize: '20px'
+              }}
+            >
+              ✕
+            </button>
+            
+            <h2 style={{ color: '#d4af37', fontFamily: 'var(--font-serif)', margin: '0 0 24px 0', fontSize: '24px' }}>Product Inquiry Details</h2>
+            
+            <div style={{ display: 'flex', gap: '24px', marginBottom: '32px' }}>
+              <div style={{ flex: 1, backgroundColor: '#111', padding: '16px', borderRadius: '8px' }}>
+                <h3 style={{ color: '#888', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 12px 0' }}>Client Information</h3>
+                <div style={{ color: 'white', fontWeight: 'bold', marginBottom: '4px', fontSize: '16px' }}>{selectedProductInquiry.full_name}</div>
+                <div style={{ color: '#aaa', fontSize: '13px', marginBottom: '4px' }}>Email: {selectedProductInquiry.email}</div>
+                {selectedProductInquiry.phone && <div style={{ color: '#aaa', fontSize: '13px' }}>Phone: {selectedProductInquiry.phone}</div>}
+              </div>
+              
+              <div style={{ flex: 1, backgroundColor: '#111', padding: '16px', borderRadius: '8px' }}>
+                <h3 style={{ color: '#888', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 12px 0' }}>Product of Interest</h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  {selectedProductInquiry.product?.image_url && (
+                    <img 
+                      src={resolveImageUrl(selectedProductInquiry.product.image_url)} 
+                      alt="Product" 
+                      style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '4px' }} 
+                    />
+                  )}
+                  <div style={{ color: 'white', fontWeight: 'bold', fontSize: '14px' }}>
+                    {selectedProductInquiry.product?.name || 'Unknown Product'}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ backgroundColor: '#111', padding: '20px', borderRadius: '8px' }}>
+              <h3 style={{ color: '#888', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 12px 0' }}>Message</h3>
+              <p style={{ color: '#eee', fontSize: '14px', lineHeight: 1.6, margin: 0, whiteSpace: 'pre-wrap' }}>
+                {selectedProductInquiry.message || 'No additional message provided.'}
+              </p>
+            </div>
+
+            <div style={{ marginTop: '24px', fontSize: '12px', color: '#666', textAlign: 'right' }}>
+              Received: {new Date(selectedProductInquiry.created_at).toLocaleString()}
+            </div>
           </div>
         </div>
       )}

@@ -780,6 +780,46 @@ router.delete('/contact-inquiries/:id', async (req, res) => {
 });
 
 // ==========================================
+// 8.5 Product Inquiries
+// ==========================================
+router.get('/product-inquiries', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT pi.*,
+             json_build_object('id', p.id, 'name', p.name, 'slug', p.slug, 'image_url', p.image_url) as product
+      FROM product_inquiries pi
+      LEFT JOIN products p ON pi.product_id = p.id
+      ORDER BY pi.created_at DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch product inquiries.' });
+  }
+});
+
+router.patch('/product-inquiries/:id/read', async (req, res) => {
+  const { isRead } = req.body;
+  try {
+    await pool.query('UPDATE product_inquiries SET is_read = $1 WHERE id = $2', [isRead, req.params.id]);
+    res.json({ message: 'Product Inquiry read state updated.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update product inquiry.' });
+  }
+});
+
+router.delete('/product-inquiries/:id', async (req, res) => {
+  try {
+    await pool.query('DELETE FROM product_inquiries WHERE id = $1', [req.params.id]);
+    res.json({ message: 'Product Inquiry deleted.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to delete product inquiry.' });
+  }
+});
+
+// ==========================================
 // 9. Newsletter Subscribers
 // ==========================================
 router.get('/newsletter/subscribers', async (req, res) => {

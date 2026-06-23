@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS booking_audit CASCADE;
 DROP TABLE IF EXISTS bookings CASCADE;
 DROP TABLE IF EXISTS newsletter_subscribers CASCADE;
 DROP TABLE IF EXISTS contact_inquiries CASCADE;
+DROP TABLE IF EXISTS product_inquiries CASCADE;
 DROP TABLE IF EXISTS customers CASCADE;
 DROP TABLE IF EXISTS reviews CASCADE;
 DROP TABLE IF EXISTS before_after_cases CASCADE;
@@ -315,7 +316,20 @@ CREATE TABLE contact_inquiries (
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- 22. site_settings (Bag of keys)
+-- 22. product_inquiries
+CREATE TABLE product_inquiries (
+  id            BIGSERIAL PRIMARY KEY,
+  customer_id   BIGINT REFERENCES customers(id) ON DELETE SET NULL,
+  product_id    BIGINT REFERENCES products(id) ON DELETE SET NULL,
+  full_name     VARCHAR(150) NOT NULL,
+  email         VARCHAR(255) NOT NULL,
+  phone         VARCHAR(50),
+  message       TEXT,
+  is_read       BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- 23. site_settings (Bag of keys)
 CREATE TABLE site_settings (
   key         VARCHAR(100) PRIMARY KEY,
   value       JSONB NOT NULL,

@@ -568,6 +568,42 @@ router.post('/contact-inquiry', async (req, res) => {
   }
 });
 
+// POST: Product inquiry submission
+router.post('/product-inquiry', async (req, res) => {
+  const { fullName, email, phone, message, productId } = req.body;
+
+  if (!fullName || !email || !productId) {
+    return res.status(400).json({ error: 'Name, email, and product ID are required.' });
+  }
+
+  try {
+    // 1. Create/Find Customer
+    let customerId = null;
+    const emailLower = email.toLowerCase();
+    const custRes = await pool.query('SELECT id FROM customers WHERE email = $1', [emailLower]);
+    if (custRes.rows.length > 0) {
+      customerId = custRes.rows[0].id;
+    } else {
+      const newCustRes = await pool.query(`
+        INSERT INTO customers (full_name, email, phone)
+        VALUES ($1, $2, $3) RETURNING id
+      `, [fullName, emailLower, phone || null]);
+      customerId = newCustRes.rows[0].id;
+    }
+
+    // 2. Save inquiry
+    await pool.query(`
+      INSERT INTO product_inquiries (customer_id, product_id, full_name, email, phone, message)
+      VALUES ($1, $2, $3, $4, $5, $6)
+    `, [customerId, productId, fullName, emailLower, phone || null, message || null]);
+
+    res.json({ message: 'Thank you for your interest. We will contact you soon.' });
+  } catch (err) {
+    console.error('Product inquiry error:', err);
+    res.status(500).json({ error: 'Server error saving product inquiry.' });
+  }
+});
+
 // POST: Newsletter subscribe
 router.post('/newsletter/subscribe', async (req, res) => {
   const { email } = req.body;

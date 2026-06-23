@@ -89,6 +89,12 @@ export const publicApi = {
     return res.data;
   },
 
+  // Submit Product Inquiry
+  submitProductInquiry: async (payload: { fullName: string; email: string; phone?: string; productId: string; message?: string }): Promise<any> => {
+    const res = await publicApiClient.post('/public/product-inquiry', payload);
+    return res.data;
+  },
+
   // Subscribe Newsletter
   subscribeNewsletter: async (email: string): Promise<any> => {
     const res = await publicApiClient.post('/public/newsletter/subscribe', { email });
