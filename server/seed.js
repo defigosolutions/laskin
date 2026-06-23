@@ -47,8 +47,8 @@ async function runSeed() {
       'north-haven',
       'North Haven',
       'North Haven Sanctuary',
-      '132 Middletown Ave, Suite 10, North Haven, CT',
-      '+1 (203) 555-0190',
+      '132 Middletown Ave Suite 10 North Haven, CT 06473',
+      '+1 (475) 209-6384',
       'info@laskinclinic.com',
       'America/New_York',
       '50%',
@@ -513,9 +513,9 @@ async function runSeed() {
       INSERT INTO site_settings (key, value)
       VALUES ($1, $2)
     `, ['settings.contact', JSON.stringify({
-      phone: '+1 (203) 555-0190',
+      phone: '+1 (475) 209-6384',
       email: 'info@laskinclinic.com',
-      address: '132 Middletown Ave, Suite 10, North Haven, CT',
+      address: '132 Middletown Ave Suite 10 North Haven, CT 06473',
       facebook_url: 'https://facebook.com/laskin',
       instagram_url: 'https://instagram.com/laskin',
       twitter_url: ''

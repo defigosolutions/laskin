@@ -81,8 +81,8 @@ export default function Footer({ onBookingClick }) {
               maxWidth: '280px',
               fontStyle: 'normal'
             }}>
-              132 Middletown Ave, Suite 10,<br />
-              North Haven, CT
+              132 Middletown Ave Suite 10<br />
+              North Haven, CT 06473
             </p>
           </div>
 

@@ -306,7 +306,7 @@ export default function Contact() {
                       type="tel" 
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="(203) 555-0100"
+                      placeholder="(475) 209-6384"
                       style={{
                         padding: '14px',
                         backgroundColor: 'rgba(255, 255, 255, 0.5)',
