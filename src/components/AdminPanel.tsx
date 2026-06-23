@@ -751,7 +751,22 @@ export default function AdminPanel() {
                         <td style={{ padding: '12px 0', textAlign: 'right' }}>
                           <button 
                             onClick={() => {
-                              setEditingItem({ ...t });
+                              setEditingItem({
+                                id: t.id,
+                                slug: t.slug,
+                                name: t.name,
+                                tagline: t.tagline,
+                                categoryId: t.category_id,
+                                durationMinutes: t.duration_minutes,
+                                recoveryText: t.recovery_text,
+                                priceCents: t.price_cents,
+                                imageUrl: t.image_url,
+                                iconKey: t.icon_key,
+                                shortDescription: t.short_description,
+                                scientificText: t.scientific_text,
+                                steps: t.steps,
+                                isPublished: t.is_published
+                              });
                               setDrawerType('treatment');
                               setDrawerOpen(true);
                             }}
@@ -828,7 +843,17 @@ export default function AdminPanel() {
                         <td style={{ padding: '12px 0', textAlign: 'right' }}>
                           <button 
                             onClick={() => {
-                              setEditingItem({ ...p });
+                              setEditingItem({
+                                id: p.id,
+                                slug: p.slug,
+                                name: p.name,
+                                tagline: p.tagline,
+                                priceCents: p.price_cents,
+                                valuePriceCents: p.value_price_cents,
+                                badge: p.badge,
+                                inclusions: p.inclusions,
+                                isPublished: p.is_published
+                              });
                               setDrawerType('package');
                               setDrawerOpen(true);
                             }}
@@ -904,7 +929,16 @@ export default function AdminPanel() {
                         <td style={{ padding: '12px 0', textAlign: 'right' }}>
                           <button 
                             onClick={() => {
-                              setEditingItem({ ...prod });
+                              setEditingItem({
+                                id: prod.id,
+                                slug: prod.slug,
+                                name: prod.name,
+                                tagline: prod.tagline,
+                                priceCents: prod.price_cents,
+                                imageUrl: prod.image_url,
+                                description: prod.description,
+                                isActive: prod.is_active
+                              });
                               setDrawerType('product');
                               setDrawerOpen(true);
                             }}
@@ -955,19 +989,33 @@ export default function AdminPanel() {
                     </tr>
                   </thead>
                   <tbody>
-                    {beforeAfters.map(c => (
-                      <tr key={c.id} style={{ borderBottom: '1px solid #151515' }}>
+                    {beforeAfters.map(ba => (
+                      <tr key={ba.id} style={{ borderBottom: '1px solid #151515' }}>
                         <td style={{ padding: '16px 0' }}>
-                          <div style={{ fontWeight: 'bold', color: 'white' }}>{c.title}</div>
-                          <div style={{ fontSize: '11px', color: '#888' }}>{c.subtitle}</div>
+                          <div style={{ fontWeight: 'bold', color: 'white' }}>{ba.title}</div>
+                          <div style={{ fontSize: '11px', color: '#888' }}>{ba.subtitle}</div>
                         </td>
-                        <td style={{ padding: '16px 0' }}>{c.treatment_id}</td>
-                        <td style={{ padding: '16px 0' }}>{c.timeline_text}</td>
-                        <td style={{ padding: '16px 0' }}>{c.satisfaction_text}</td>
+                        <td style={{ padding: '16px 0' }}>{ba.treatment_id}</td>
+                        <td style={{ padding: '16px 0' }}>{ba.timeline_text}</td>
+                        <td style={{ padding: '16px 0' }}>{ba.satisfaction_text}</td>
                         <td style={{ padding: '16px 0', textAlign: 'right' }}>
                           <button 
                             onClick={() => {
-                              setEditingItem({ ...c });
+                              setEditingItem({
+                                id: ba.id,
+                                slug: ba.slug,
+                                title: ba.title,
+                                subtitle: ba.subtitle,
+                                treatmentId: ba.treatment_id,
+                                timelineText: ba.timeline_text,
+                                primaryIndications: ba.primary_indications,
+                                therapistNotes: ba.therapist_notes,
+                                satisfactionText: ba.satisfaction_text,
+                                ageProfile: ba.age_profile,
+                                beforeImageUrl: ba.before_image_url,
+                                afterImageUrl: ba.after_image_url,
+                                isPublished: ba.is_published
+                              });
                               setDrawerType('beforeafter');
                               setDrawerOpen(true);
                             }}
@@ -976,7 +1024,7 @@ export default function AdminPanel() {
                             Edit
                           </button>
                           <button 
-                            onClick={() => handleDeleteItem('beforeafter', c.id)}
+                            onClick={() => handleDeleteItem('beforeafter', ba.id)}
                             style={{ padding: '4px 8px', backgroundColor: 'rgba(255,0,0,0.1)', color: 'red', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
                           >
                             Delete
