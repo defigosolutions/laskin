@@ -29,10 +29,26 @@ function App() {
       });
     }, { threshold: 0.1 });
 
-    const elements = document.querySelectorAll('.reveal-in');
-    elements.forEach((el) => observer.observe(el));
+    const observeElements = () => {
+      const elements = document.querySelectorAll('.reveal-in:not(.observed)');
+      elements.forEach((el) => {
+        observer.observe(el);
+        el.classList.add('observed');
+      });
+    };
 
-    return () => observer.disconnect();
+    observeElements();
+
+    const mutationObserver = new MutationObserver(() => {
+      observeElements();
+    });
+
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 
   const openBookingModal = (treatmentName = '') => {
