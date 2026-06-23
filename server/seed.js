@@ -423,8 +423,8 @@ async function runSeed() {
       'Dermapen micro-needling with vitamin cocktail applied. Patient showed significant cell turnover, shrinking pores and smoothing fine lines.',
       '100% Client Rating',
       '35 Years',
-      'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop',
+      '/images/cases/biocellular-skin-rejuvenation.jpeg',
+      '/images/cases/biocellular-skin-rejuvenation.jpeg',
       1
     ]);
 
@@ -442,8 +442,8 @@ async function runSeed() {
       'Vortex vacuum extraction successfully cleared T-zone congestion. Followed by deep pneumatic hyaluronic acid infusion for an immediate high-gloss finish.',
       '98% Client Rating',
       '27 Years',
-      'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop',
+      '/images/cases/advanced-hydrafacial-glow.jpeg',
+      '/images/cases/advanced-hydrafacial-glow.jpeg',
       2
     ]);
 
