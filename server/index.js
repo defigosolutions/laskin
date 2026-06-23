@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import path from 'path';
 import dotenv from 'dotenv';
+import { pool } from './db.js';
 
 import authRouter from './routes/auth.js';
 import adminRouter from './routes/admin.js';
@@ -41,6 +42,39 @@ app.use('/api/v1/public', publicRouter);
 // Root test endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Dynamic Sitemap Generator
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT value FROM site_settings WHERE key = 'settings.seo_routes'`);
+    let urls = [];
+    if (result.rows.length > 0) {
+      urls = result.rows[0].value;
+    }
+    
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>\\n';
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n';
+    
+    urls.forEach(route => {
+      // Avoid adding admin routes if they somehow get added
+      if (!route.path.startsWith('/laskin-manage')) {
+        xml += '  <url>\\n';
+        xml += \`    <loc>https://laskinandaesthetics.com\${route.path === '/' ? '' : route.path}</loc>\\n\`;
+        xml += '    <changefreq>weekly</changefreq>\\n';
+        xml += '    <priority>0.8</priority>\\n';
+        xml += '  </url>\\n';
+      }
+    });
+    
+    xml += '</urlset>';
+    
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error generating sitemap');
+  }
 });
 
 // 4. Serve React frontend static files in production

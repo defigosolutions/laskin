@@ -843,6 +843,40 @@ router.delete('/newsletter/subscribers/:id', async (req, res) => {
 });
 
 // ==========================================
+// 8. SEO Management
+// ==========================================
+router.get('/seo', async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT value FROM site_settings WHERE key = 'settings.seo_routes'`);
+    if (result.rows.length === 0) {
+      return res.json([]);
+    }
+    res.json(result.rows[0].value);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch SEO settings.' });
+  }
+});
+
+router.put('/seo', async (req, res) => {
+  const { routes } = req.body;
+  if (!Array.isArray(routes)) {
+    return res.status(400).json({ error: 'Invalid payload.' });
+  }
+  try {
+    await pool.query(`
+      INSERT INTO site_settings (key, value) 
+      VALUES ('settings.seo_routes', $1) 
+      ON CONFLICT (key) DO UPDATE SET value = $1, updated_at = now()
+    `, [JSON.stringify(routes)]);
+    res.json({ message: 'SEO settings updated successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update SEO settings.' });
+  }
+});
+
+// ==========================================
 // 10. Before & After Cases CRUD
 // ==========================================
 router.get('/before-after', async (req, res) => {

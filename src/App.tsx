@@ -13,6 +13,7 @@ import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 import Products from './sections/Products';
 import AdminPanel from './components/AdminPanel';
+import DynamicSEO from './components/DynamicSEO';
 import './App.css';
 
 function App() {
@@ -48,6 +49,8 @@ function App() {
 
   return (
     <>
+      <DynamicSEO />
+      
       {/* Navigation Header */}
       <Navbar onBookingClick={() => openBookingModal('')} />
 

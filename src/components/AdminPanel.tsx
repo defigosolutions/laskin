@@ -42,6 +42,8 @@ export default function AdminPanel() {
   const [productInquiries, setProductInquiries] = useState<any[]>([]);
   const [subscribers, setSubscribers] = useState<any[]>([]);
   const [settings, setSettings] = useState<any>({});
+  const [smtpSettings, setSmtpSettings] = useState<any>({ host: '', port: 587, user: '', pass: '', secure: false });
+  const [seoRoutes, setSeoRoutes] = useState<any[]>([]);
 
   // Loading States
   const [loading, setLoading] = useState(false);
@@ -53,7 +55,6 @@ export default function AdminPanel() {
   const [selectedProductInquiry, setSelectedProductInquiry] = useState<any>(null);
 
   // SMTP Settings details
-  const [smtpSettings, setSmtpSettings] = useState<any>({});
   const [smtpTesting, setSmtpTesting] = useState(false);
   const [smtpTestResult, setSmtpTestResult] = useState<string | null>(null);
 
@@ -170,6 +171,9 @@ export default function AdminPanel() {
         const res = await api.get('/admin/settings');
         setSettings(res.data);
         setSmtpSettings(res.data['settings.smtp'] || {});
+      } else if (activeTab === 'seo') {
+        const res = await api.get('/admin/seo');
+        setSeoRoutes(res.data || []);
       }
     } catch (err) {
       console.error(`Error loading tab ${activeTab}:`, err);
@@ -194,6 +198,26 @@ export default function AdminPanel() {
       alert('Image uploaded successfully!');
     } catch (err: any) {
       alert(err.response?.data?.error || 'Image upload failed. Size limit 5MB.');
+    }
+  };
+
+  const saveSettings = async () => {
+    try {
+      await api.post('/admin/settings', {
+        'settings.smtp': smtpSettings
+      });
+      alert('Settings saved successfully!');
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Failed to save settings.');
+    }
+  };
+
+  const saveSeoSettings = async () => {
+    try {
+      await api.put('/admin/seo', { routes: seoRoutes });
+      alert('SEO Settings saved successfully!');
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Failed to save SEO settings.');
     }
   };
 
@@ -459,6 +483,7 @@ export default function AdminPanel() {
             { id: 'inquiries', label: 'Contact Inquiries', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
             { id: 'product_inquiries', label: 'Product Inquiries', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
             { id: 'subscribers', label: 'Newsletter Registry', icon: 'M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206' },
+            { id: 'seo', label: 'SEO Management', icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' },
             { id: 'settings', label: 'System Settings', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' }
           ].map(tab => (
             <button
@@ -1287,6 +1312,96 @@ export default function AdminPanel() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            )}
+
+            {/* ==========================================
+                TAB: SEO MANAGEMENT
+                ========================================== */}
+            {activeTab === 'seo' && (
+              <div style={{ backgroundColor: '#0a0a0a', border: '1px solid #1a1a1a', borderRadius: '8px', padding: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                  <span style={{ fontSize: '14px', color: '#d4af37' }}>Search Engine Optimization</span>
+                  <button 
+                    onClick={saveSeoSettings}
+                    style={{ padding: '8px 16px', background: 'var(--color-gold-gradient)', border: 'none', color: 'black', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '12px' }}
+                  >
+                    Save SEO Configuration
+                  </button>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  {seoRoutes.map((route, idx) => (
+                    <div key={idx} style={{ backgroundColor: '#111', border: '1px solid #222', borderRadius: '6px', padding: '16px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <span style={{ fontWeight: 'bold', color: 'white', fontSize: '14px' }}>Route: {route.path}</span>
+                        <button 
+                          onClick={() => {
+                            const newRoutes = [...seoRoutes];
+                            newRoutes.splice(idx, 1);
+                            setSeoRoutes(newRoutes);
+                          }}
+                          style={{ background: 'transparent', border: 'none', color: 'red', cursor: 'pointer', fontSize: '12px' }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <label style={{ fontSize: '11px', color: '#aaa' }}>Page Title *</label>
+                          <input 
+                            type="text" 
+                            value={route.title} 
+                            onChange={(e) => {
+                              const newRoutes = [...seoRoutes];
+                              newRoutes[idx].title = e.target.value;
+                              setSeoRoutes(newRoutes);
+                            }}
+                            style={{ padding: '10px', backgroundColor: '#000', border: '1px solid #222', color: 'white', borderRadius: '4px' }} 
+                          />
+                        </div>
+                        
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <label style={{ fontSize: '11px', color: '#aaa' }}>Meta Description *</label>
+                          <textarea 
+                            rows={2}
+                            value={route.description} 
+                            onChange={(e) => {
+                              const newRoutes = [...seoRoutes];
+                              newRoutes[idx].description = e.target.value;
+                              setSeoRoutes(newRoutes);
+                            }}
+                            style={{ padding: '10px', backgroundColor: '#000', border: '1px solid #222', color: 'white', borderRadius: '4px', resize: 'vertical' }} 
+                          />
+                        </div>
+                        
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <label style={{ fontSize: '11px', color: '#aaa' }}>Keywords (comma separated)</label>
+                          <input 
+                            type="text" 
+                            value={route.keywords} 
+                            onChange={(e) => {
+                              const newRoutes = [...seoRoutes];
+                              newRoutes[idx].keywords = e.target.value;
+                              setSeoRoutes(newRoutes);
+                            }}
+                            style={{ padding: '10px', backgroundColor: '#000', border: '1px solid #222', color: 'white', borderRadius: '4px' }} 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <button 
+                    onClick={() => {
+                      setSeoRoutes([...seoRoutes, { path: '/new-route', title: '', description: '', keywords: '' }]);
+                    }}
+                    style={{ padding: '12px', background: 'transparent', border: '1px dashed #333', color: '#d4af37', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', marginTop: '8px' }}
+                  >
+                    + Add New Route
+                  </button>
+                </div>
               </div>
             )}
 

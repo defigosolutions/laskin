@@ -527,6 +527,13 @@ async function runSeed() {
     `, ['settings.maintenance', JSON.stringify({
       maintenance_mode: false
     })]);
+    await client.query(`
+      INSERT INTO site_settings (key, value)
+      VALUES ($1, $2)
+    `, ['settings.seo_routes', JSON.stringify([
+      { path: '/', title: 'LA Skin & Aesthetics | Luxury Medical Spa in North Haven, CT', description: 'Premium luxury medical spa and aesthetics clinic in North Haven, CT, offering Hydrafacials, Laser Hair Removal, and advanced skincare treatments.', keywords: 'skin clinic, luxury spa, beauty treatments, hydrafacial, laser hair removal, anti-aging, LA Skin and Aesthetics, North Haven CT, Laura Andrade' },
+      { path: '/products', title: 'Luxury Online Boutique | LA Skin & Aesthetics', description: 'Explore our premium selection of clinical skincare formulations and luxury aesthetics products at LA Skin & Aesthetics.', keywords: 'skincare products, luxury skin cream, hydrafacial serums, anti-aging serums, LA Skin boutique' }
+    ])]);
 
     console.log('Seeding process completed successfully!');
 
