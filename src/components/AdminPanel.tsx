@@ -463,6 +463,11 @@ export default function AdminPanel() {
   // RENDER PORTAL SYSTEM (Dense, Responsive Dashboard layout)
   return (
     <div className="admin-layout" style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#050505', color: '#eee', fontFamily: 'var(--font-sans)' }}>
+      {/* Mobile Drawer Backdrop */}
+      <div 
+        className={`admin-backdrop ${!sidebarOpen ? 'hidden' : ''}`} 
+        onClick={() => setSidebarOpen(false)} 
+      />
       {/* Sidebar Navigation */}
       <aside className={`admin-sidebar ${!sidebarOpen ? 'collapsed' : ''}`} style={{ width: '260px', backgroundColor: '#0a0a0a', borderRight: '1px solid #1a1a1a', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '24px', borderBottom: '1px solid #1a1a1a', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

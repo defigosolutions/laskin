@@ -213,7 +213,7 @@ export default function Navbar({ onBookingClick }) {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: '120px 20px 40px 20px',
+        padding: '90px 20px 40px 20px',
         overflowY: 'auto',
       }}>
         <ul style={{
@@ -221,7 +221,7 @@ export default function Navbar({ onBookingClick }) {
           textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
-          gap: '20px',
+          gap: '12px',
           marginBottom: '40px',
         }}>
           {navLinks.map((link, index) => (
@@ -239,13 +239,13 @@ export default function Navbar({ onBookingClick }) {
                   onClick={() => setMobileMenuOpen(false)}
                   style={{
                     fontFamily: 'var(--font-serif)',
-                    fontSize: '20px',
+                    fontSize: '16px',
                     letterSpacing: '0.15em',
                     color: 'var(--color-text-light)',
                     textTransform: 'uppercase',
                     fontWeight: 300,
                     display: 'block',
-                    padding: '8px 0',
+                    padding: '4px 0',
                   }}
                 >
                   {link.label}

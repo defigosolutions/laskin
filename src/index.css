@@ -274,4 +274,5 @@ header .mobile-hamburger span {
 .admin-menu-toggle {
   display: none;
 }
-
+
+.admin-backdrop { display: none; }

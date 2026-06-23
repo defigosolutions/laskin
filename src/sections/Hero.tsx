@@ -46,7 +46,7 @@ export default function Hero({ onBookingClick }) {
       }} />
 
       <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-        <div style={{ maxWidth: '680px' }} className="reveal-in active">
+        <div style={{ maxWidth: '680px' }} className="reveal-in active hero-content">
           {/* Subtle luxurious tagline */}
           <span style={{
             fontFamily: 'var(--font-sans)',
@@ -89,7 +89,7 @@ export default function Hero({ onBookingClick }) {
           </p>
 
           {/* Action buttons */}
-          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }} className="flex-col-mobile">
+          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }} className="flex-col-mobile hero-btns">
             <button 
               className="btn-primary w-full-mobile" 
               onClick={onBookingClick}
@@ -157,6 +157,20 @@ export default function Hero({ onBookingClick }) {
           .hero-section {
             padding: 100px 0 40px 0 !important;
             min-height: auto !important;
+          }
+          .hero-content {
+            text-align: center !important;
+            margin: 0 auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+          }
+          .hero-content p {
+            margin: 0 auto 30px auto !important;
+          }
+          .hero-btns {
+            justify-content: center !important;
+            width: 100% !important;
           }
         }
         .hero-btn-sec:hover {
