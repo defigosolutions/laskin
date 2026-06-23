@@ -24,6 +24,7 @@ export default function Hero({ onBookingClick }) {
 
   return (
     <section 
+      className="hero-section"
       style={{
         position: 'relative',
         minHeight: '100vh',
@@ -88,16 +89,16 @@ export default function Hero({ onBookingClick }) {
           </p>
 
           {/* Action buttons */}
-          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }} className="flex-col-mobile">
             <button 
-              className="btn-primary" 
+              className="btn-primary w-full-mobile" 
               onClick={onBookingClick}
               style={{ padding: '16px 36px', fontSize: '12px' }}
             >
               Book Priority Visit
             </button>
             <button 
-              className="btn-secondary hero-btn-sec" 
+              className="btn-secondary hero-btn-sec w-full-mobile" 
               onClick={handleScrollToTreatments}
               style={{ 
                 padding: '15px 35px', 
@@ -150,6 +151,12 @@ export default function Hero({ onBookingClick }) {
         @media (max-width: 1024px) {
           .hero-floating-box {
             display: none !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .hero-section {
+            padding: 100px 0 40px 0 !important;
+            min-height: auto !important;
           }
         }
         .hero-btn-sec:hover {

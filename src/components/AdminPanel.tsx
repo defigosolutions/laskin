@@ -19,6 +19,7 @@ export default function AdminPanel() {
   const [token, setToken] = useState<string | null>(localStorage.getItem('laskin_admin_token'));
   const [user, setUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Login States
   const [email, setEmail] = useState('');
@@ -461,9 +462,9 @@ export default function AdminPanel() {
 
   // RENDER PORTAL SYSTEM (Dense, Responsive Dashboard layout)
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#050505', color: '#eee', fontFamily: 'var(--font-sans)' }}>
+    <div className="admin-layout" style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#050505', color: '#eee', fontFamily: 'var(--font-sans)' }}>
       {/* Sidebar Navigation */}
-      <aside style={{ width: '260px', backgroundColor: '#0a0a0a', borderRight: '1px solid #1a1a1a', display: 'flex', flexDirection: 'column' }}>
+      <aside className={`admin-sidebar ${!sidebarOpen ? 'collapsed' : ''}`} style={{ width: '260px', backgroundColor: '#0a0a0a', borderRight: '1px solid #1a1a1a', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '24px', borderBottom: '1px solid #1a1a1a', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h3 style={{ fontFamily: 'var(--font-serif)', color: '#d4af37', fontSize: '20px', margin: 0 }}>LA Skin</h3>
@@ -488,7 +489,7 @@ export default function AdminPanel() {
           ].map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => { setActiveTab(tab.id); setSidebarOpen(false); }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -538,7 +539,7 @@ export default function AdminPanel() {
       </aside>
 
       {/* Main Panel Content Area */}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto', padding: '40px' }}>
+      <main className="admin-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto', padding: '40px' }}>
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '28px', color: 'white', fontWeight: 400, textTransform: 'capitalize' }}>
             {activeTab.replace('-', ' ')}
@@ -572,11 +573,11 @@ export default function AdminPanel() {
                   ))}
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '30px' }}>
+                <div className="grid-1-mobile" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '30px' }}>
                   {/* Recent Bookings */}
                   <div style={{ backgroundColor: '#0a0a0a', border: '1px solid #1a1a1a', padding: '24px', borderRadius: '8px' }}>
                     <h3 style={{ fontSize: '16px', color: '#d4af37', marginBottom: '16px', fontWeight: 400 }}>Recent Bookings Pipeline</h3>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                    <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                       <thead>
                         <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                           <th style={{ paddingBottom: '12px' }}>Ref</th>
@@ -606,7 +607,7 @@ export default function AdminPanel() {
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </table></div>
                   </div>
 
                   {/* Recent Inquiries */}
@@ -645,7 +646,7 @@ export default function AdminPanel() {
                     Export to CSV
                   </button>
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Ref</th>
@@ -715,7 +716,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 
@@ -737,7 +738,7 @@ export default function AdminPanel() {
                     + Add New Service
                   </button>
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Order</th>
@@ -809,7 +810,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 
@@ -831,7 +832,7 @@ export default function AdminPanel() {
                     + Add New Package
                   </button>
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Order</th>
@@ -896,7 +897,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 
@@ -918,7 +919,7 @@ export default function AdminPanel() {
                     + Add New Product
                   </button>
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Order</th>
@@ -981,7 +982,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 
@@ -1003,7 +1004,7 @@ export default function AdminPanel() {
                     + Add New Case
                   </button>
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Case Title</th>
@@ -1058,7 +1059,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 
@@ -1068,7 +1069,7 @@ export default function AdminPanel() {
             {activeTab === 'reviews' && (
               <div style={{ backgroundColor: '#0a0a0a', border: '1px solid #1a1a1a', borderRadius: '8px', padding: '24px' }}>
                 <span style={{ fontSize: '14px', color: '#d4af37', display: 'block', marginBottom: '20px' }}>Client Testimonials Moderation</span>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Client</th>
@@ -1132,7 +1133,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 
@@ -1150,7 +1151,7 @@ export default function AdminPanel() {
                     Export to CSV
                   </button>
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Date</th>
@@ -1193,7 +1194,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 
@@ -1211,7 +1212,7 @@ export default function AdminPanel() {
                     Export to CSV
                   </button>
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Date</th>
@@ -1267,7 +1268,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 
@@ -1285,7 +1286,7 @@ export default function AdminPanel() {
                     Export to CSV
                   </button>
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
                       <th style={{ paddingBottom: '12px' }}>Email Address</th>
@@ -1311,7 +1312,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table></div>
               </div>
             )}
 

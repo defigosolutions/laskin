@@ -212,6 +212,66 @@ header .mobile-hamburger span {
   header a div span {
     color: var(--color-text-light) !important;
   }
+
+  /* Typography Scale Overrides */
+  h1 { font-size: 32px !important; }
+  h2 { font-size: 28px !important; }
+  h3 { font-size: 24px !important; }
+  
+  .section-title { font-size: 32px !important; }
+  
+  /* Flex & Grid Utilities */
+  .flex-col-mobile {
+    flex-direction: column !important;
+  }
+  .mobile-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .grid-1-mobile {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Sizing Utilities */
+  .w-full-mobile {
+    width: 100% !important;
+  }
+  .p-mobile-sm {
+    padding: 16px !important;
+  }
+  .m-0-mobile {
+    margin: 0 !important;
+  }
+  
+  /* Admin Overrides */
+  .admin-layout {
+    flex-direction: column !important;
+  }
+  .admin-sidebar {
+    width: 100% !important;
+    height: auto !important;
+    position: static !important;
+  }
+  .admin-sidebar.collapsed {
+    display: none !important;
+  }
+  .admin-main {
+    padding: 16px !important;
+    width: 100% !important;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+    width: 100%;
+  }
+  .admin-menu-toggle {
+    display: block !important;
+  }
 }
 
+.admin-menu-toggle {
+  display: none;
+}
 

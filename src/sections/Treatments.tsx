@@ -266,7 +266,7 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
           if (e.target === e.currentTarget) setSelectedTreatment(null);
         }}
         >
-          <div style={{
+          <div className="drawer-panel" style={{
             width: '100%',
             maxWidth: '640px',
             maxHeight: '90vh',
@@ -324,7 +324,7 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
             </div>
 
             {/* Panel Body Content */}
-            <div style={{ padding: '0 40px 40px 40px', flex: 1, marginTop: '-30px', position: 'relative', zIndex: 10 }}>
+            <div className="drawer-body" style={{ padding: '0 40px 40px 40px', flex: 1, marginTop: '-30px', position: 'relative', zIndex: 10 }}>
               <span style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '10px',
@@ -347,7 +347,7 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
               </p>
 
               {/* Stats / Metadata pills */}
-                <div style={{
+                <div className="stats-grid" style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
                   gap: '12px',
@@ -469,6 +469,29 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
         @media (max-width: 768px) {
           .treatments-grid {
             grid-template-columns: 1fr !important;
+          }
+          .drawer-panel {
+            max-height: 100vh !important;
+            height: 100vh !important;
+            border-radius: 0 !important;
+            max-width: 100% !important;
+          }
+          .drawer-body {
+            padding: 0 24px 30px 24px !important;
+          }
+          .stats-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+          .stats-grid > div {
+            border-left: none !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
+          }
+          .stats-grid > div:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
           }
         }
       `}</style>

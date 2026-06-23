@@ -280,7 +280,7 @@ export default function Contact() {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="contact-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <label style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', textTransform: 'uppercase', color: 'var(--color-text-dark)', letterSpacing: '0.08em', fontWeight: 600 }}>Email *</label>
                     <input 
@@ -383,6 +383,11 @@ export default function Contact() {
           .booking-grid {
             grid-template-columns: 1fr !important;
             gap: 50px !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .contact-form-grid {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
