@@ -117,7 +117,7 @@ async function runSeed() {
         duration: 90,
         recovery: 'Zero downtime',
         price: 14000,
-        imageUrl: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/hydrafacial.jpeg',
         icon: 'droplet',
         shortDesc: 'Our premium medical-grade facial skin treatment. Cleanses, extracts impurities, and hydrates using exclusive nourishing super-serums filled with antioxidants and peptides.',
         displayOrder: 1
@@ -145,7 +145,7 @@ async function runSeed() {
         duration: 30,
         recovery: 'Minimal redness',
         price: 5000,
-        imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/radio-frequency.jpeg',
         icon: 'zap',
         shortDesc: 'Utilizes radiofrequency energy to gently heat dermal layers, promoting immediate collagen contraction and stimulating long-term skin tightening.',
         displayOrder: 3
@@ -159,7 +159,7 @@ async function runSeed() {
         duration: 30,
         recovery: 'Zero downtime',
         price: 5000,
-        imageUrl: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/ultrasonic.jpeg',
         icon: 'shield',
         shortDesc: 'High-frequency ultrasonic waves clear dead skin cells and impurities, encouraging cellular renewal and optimal skin barrier nutrient absorption.',
         displayOrder: 4
@@ -173,7 +173,7 @@ async function runSeed() {
         duration: 40,
         recovery: '1 - 2 Days slight pinkness',
         price: 6000,
-        imageUrl: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/dermabrasion.jpeg',
         icon: 'sun',
         shortDesc: 'Gently exfoliates the superficial layer of dead skin cells to smooth uneven texture, reduce light acne scarring, and stimulate healthy fresh cell turn-over.',
         displayOrder: 5
@@ -187,7 +187,7 @@ async function runSeed() {
         duration: 60,
         recovery: 'Zero downtime',
         price: 15000,
-        imageUrl: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/anti-aging.jpeg',
         icon: 'shield',
         shortDesc: 'Bespoke clinical therapies targeting fine lines, wrinkles, and volume loss. Promotes skin elasticity and activates structural dermal healing.',
         displayOrder: 6
@@ -201,7 +201,7 @@ async function runSeed() {
         duration: 45,
         recovery: 'Zero downtime',
         price: 7500,
-        imageUrl: 'https://images.unsplash.com/photo-1594824813573-246434de83fb?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/hydralips.jpeg',
         icon: 'heart',
         shortDesc: 'Deep hydration and micro-infusion treatment for dry or cracked lips, providing a subtle plumping effect and a soft, glowing rosy texture.',
         displayOrder: 7
@@ -215,7 +215,7 @@ async function runSeed() {
         duration: 30,
         recovery: 'Zero downtime',
         price: 40000,
-        imageUrl: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/laser-hair-removal-single.jpeg',
         icon: 'zap',
         shortDesc: 'Safe, premium laser hair removal treatment utilizing advanced cooling technology to ensure maximum client comfort and long-term hair follicle clearance.',
         displayOrder: 8
@@ -229,7 +229,7 @@ async function runSeed() {
         duration: 60,
         recovery: '1 Day slight redness',
         price: 15000,
-        imageUrl: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/prp.jpeg',
         icon: 'droplet',
         shortDesc: 'Utilizes growth factors isolated from your own blood plasma to stimulate rapid cellular regeneration, collagen synthesis, and deep tissue recovery.',
         displayOrder: 9
@@ -243,7 +243,7 @@ async function runSeed() {
         duration: 45,
         recovery: '1 - 2 Days sensitivity',
         price: 10000,
-        imageUrl: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/dermapen-vitaminas.jpeg',
         icon: 'sparkles',
         shortDesc: 'Advanced micro-needling treatment that creates tiny micro-channels in the skin to inject a custom cocktail of vitamins, hyaluronic acid, and peptides.',
         displayOrder: 10
@@ -257,7 +257,7 @@ async function runSeed() {
         duration: 45,
         recovery: '3 - 5 Days light peeling',
         price: 10000,
-        imageUrl: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/peelings.jpeg',
         icon: 'sun',
         shortDesc: 'Professional chemical peels targeting hyperpigmentation, active acne, and superficial scarring to reveal a smoother, highly even skin tone.',
         displayOrder: 11
@@ -271,7 +271,7 @@ async function runSeed() {
         duration: 60,
         recovery: 'Zero downtime',
         price: 18000,
-        imageUrl: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/exosomas.jpeg',
         icon: 'shield',
         shortDesc: 'Cutting-edge therapy utilizing purified stem-cell derived exosomes to deliver massive cellular signals for collagen stimulation and anti-aging repair.',
         displayOrder: 12
@@ -285,7 +285,7 @@ async function runSeed() {
         duration: 60,
         recovery: 'Immediate relief',
         price: 9000,
-        imageUrl: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/drainage.jpeg',
         icon: 'heart',
         shortDesc: 'Specialized, gentle massage technique designed to accelerate fluid drainage, reduce clinical swelling, and promote healthy post-surgical healing.',
         displayOrder: 13
@@ -293,13 +293,13 @@ async function runSeed() {
       {
         id: 'massage-relax',
         slug: 'massage-relax',
-        name: 'Masaje de Espalda Relajante',
+        name: 'Relax Massage',
         tagline: 'Luxury Stress-Relieving Therapy',
         categoryId: 'advanced-treatments',
         duration: 45,
         recovery: 'Zero downtime',
         price: 6000,
-        imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600&auto=format&fit=crop',
+        imageUrl: '/images/treatments/massage-relax.jpeg',
         icon: 'heart',
         shortDesc: 'A soothing therapeutic back massage designed to melt away muscular tension, lower cortisol levels, and restore absolute peace.',
         displayOrder: 14
