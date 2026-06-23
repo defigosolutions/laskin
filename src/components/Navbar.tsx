@@ -211,19 +211,17 @@ export default function Navbar({ onBookingClick }) {
         transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: '40px',
+        padding: '120px 20px 40px 20px',
+        overflowY: 'auto',
       }}>
-        <Link to="/" onClick={(e) => handleLinkClick(e, '#')} style={{ marginBottom: '40px', display: 'block' }}>
-          <Logo variant="vertical" height={60} />
-        </Link>
         <ul style={{
           listStyle: 'none',
           textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
-          gap: '24px',
+          gap: '20px',
           marginBottom: '40px',
         }}>
           {navLinks.map((link, index) => (
@@ -241,7 +239,7 @@ export default function Navbar({ onBookingClick }) {
                   onClick={() => setMobileMenuOpen(false)}
                   style={{
                     fontFamily: 'var(--font-serif)',
-                    fontSize: '24px',
+                    fontSize: '20px',
                     letterSpacing: '0.15em',
                     color: 'var(--color-text-light)',
                     textTransform: 'uppercase',
@@ -258,7 +256,7 @@ export default function Navbar({ onBookingClick }) {
                   onClick={(e) => handleLinkClick(e, link.href)}
                   style={{
                     fontFamily: 'var(--font-serif)',
-                    fontSize: '24px',
+                    fontSize: '20px',
                     letterSpacing: '0.15em',
                     color: 'var(--color-text-light)',
                     textTransform: 'uppercase',
