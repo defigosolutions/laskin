@@ -54,7 +54,7 @@ router.get('/branches', async (req, res) => {
 // GET: SEO Route Settings
 router.get('/seo', async (req, res) => {
   try {
-    const result = await pool.query(\`SELECT value FROM site_settings WHERE key = 'settings.seo_routes'\`);
+    const result = await pool.query(`SELECT value FROM site_settings WHERE key = 'settings.seo_routes'`);
     if (result.rows.length === 0) {
       return res.json([]);
     }

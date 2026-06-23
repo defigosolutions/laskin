@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import path from 'path';
 import dotenv from 'dotenv';
-import { pool } from './db.js';
+import pool from './db.js';
 
 import authRouter from './routes/auth.js';
 import adminRouter from './routes/admin.js';
@@ -53,17 +53,17 @@ app.get('/sitemap.xml', async (req, res) => {
       urls = result.rows[0].value;
     }
     
-    let xml = '<?xml version="1.0" encoding="UTF-8"?>\\n';
-    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n';
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
     
     urls.forEach(route => {
       // Avoid adding admin routes if they somehow get added
       if (!route.path.startsWith('/laskin-manage')) {
-        xml += '  <url>\\n';
-        xml += \`    <loc>https://laskinandaesthetics.com\${route.path === '/' ? '' : route.path}</loc>\\n\`;
-        xml += '    <changefreq>weekly</changefreq>\\n';
-        xml += '    <priority>0.8</priority>\\n';
-        xml += '  </url>\\n';
+        xml += '  <url>\n';
+        xml += `    <loc>https://laskinandaesthetics.com${route.path === '/' ? '' : route.path}</loc>\n`;
+        xml += '    <changefreq>weekly</changefreq>\n';
+        xml += '    <priority>0.8</priority>\n';
+        xml += '  </url>\n';
       }
     });
     
