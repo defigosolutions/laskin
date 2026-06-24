@@ -350,18 +350,53 @@ async function runSeed() {
       `, [p.id, p.slug, p.name, p.tagline, p.price, p.valuePrice, p.badge, p.order]);
     }
 
-    // Seed package inclusions (For Facial 10 Sesiones)
-    const inclusions = [
-      '10 Custom clinical facial sessions matching your skin profile',
-      'Combines mechanical pore purification and custom hydration infuses',
-      'Personalized structural mapping by founder Laura Andrade',
-      'Includes botanical soothing face lifting massages'
-    ];
-    for (let i = 0; i < inclusions.length; i++) {
-      await client.query(`
-        INSERT INTO package_inclusions (package_id, position, description)
-        VALUES ($1, $2, $3)
-      `, ['facial-10', i + 1, inclusions[i]]);
+    // Seed package inclusions
+    const packageInclusionsData = {
+      'facial-10': [
+        '10 Custom clinical facial sessions matching your skin profile',
+        'Combines mechanical pore purification and custom hydration infuses',
+        'Personalized structural mapping by founder Laura Andrade',
+        'Includes botanical soothing face lifting massages'
+      ],
+      'bikini-10': [
+        '10 Premium laser bikini hair removal sessions',
+        'Advanced cooling technology for maximum comfort',
+        'Permanent reduction of hair follicle growth',
+        'Safe for all skin types and profiles'
+      ],
+      'brazilian-10': [
+        '10 Complete laser Brazilian clearance sessions',
+        'Precision treatment covering the entire area',
+        'Advanced cooling technology for a painless experience',
+        'Long-lasting, smooth and flawless skin results'
+      ],
+      'underarms-10': [
+        '10 Targeted laser underarm clearance sessions',
+        'Eliminates razor burn, ingrown hairs, and shadows',
+        'Quick and comfortable sessions with minimal downtime',
+        'Permanent hair reduction for smooth underarms'
+      ],
+      'bleaching-5': [
+        '5 Specialized sessions for axillary or intimate bleaching',
+        'Gentle, medical-grade brightening formulations',
+        'Targeted treatment to reduce hyperpigmentation and dark spots',
+        'Evens out skin tone for a flawless, natural appearance'
+      ],
+      'double-chin-5': [
+        '5 Advanced chin tightening and sculpting sessions',
+        'Non-invasive fat reduction and skin firming technology',
+        'Defines jawline and improves structural facial profile',
+        'Stimulates natural collagen production for lasting lift'
+      ]
+    };
+
+    for (const [pkgId, incs] of Object.entries(packageInclusionsData)) {
+      for (let i = 0; i < incs.length; i++) {
+        await client.query(`
+          INSERT INTO package_inclusions (package_id, position, description)
+          VALUES ($1, $2, $3)
+        `, [pkgId, i + 1, incs[i]]);
+      }
     }
 
     // 9. Seed products
@@ -423,8 +458,8 @@ async function runSeed() {
       'Dermapen micro-needling with vitamin cocktail applied. Patient showed significant cell turnover, shrinking pores and smoothing fine lines.',
       '100% Client Rating',
       '35 Years',
-      '/images/cases/biocellular-skin-rejuvenation.jpeg',
-      '/images/cases/biocellular-skin-rejuvenation.jpeg',
+      '/images/cases/case-1_before.jpg',
+      '/images/cases/case-1_after.jpg',
       1
     ]);
 
@@ -442,8 +477,8 @@ async function runSeed() {
       'Vortex vacuum extraction successfully cleared T-zone congestion. Followed by deep pneumatic hyaluronic acid infusion for an immediate high-gloss finish.',
       '98% Client Rating',
       '27 Years',
-      '/images/cases/advanced-hydrafacial-glow.jpeg',
-      '/images/cases/advanced-hydrafacial-glow.jpeg',
+      '/images/cases/case-2_before.jpg',
+      '/images/cases/case-2_after.jpg',
       2
     ]);
 
