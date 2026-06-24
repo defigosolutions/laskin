@@ -221,7 +221,7 @@ export default function Footer({ onBookingClick }) {
           <span>© {new Date().getFullYear()} LA Skin & Aesthetics. All Rights Reserved.</span>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            <span>Developed by Bluetelecast</span>
+            <span>Developed by <a href="https://bluetelecast.com/" target="_blank" rel="noopener noreferrer" className="footer-link-bottom" style={{ color: 'inherit' }}>Bluetelecast</a></span>
             <button 
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               style={{
