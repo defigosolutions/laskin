@@ -220,10 +220,28 @@ export default function Footer({ onBookingClick }) {
         >
           <span>© {new Date().getFullYear()} LA Skin & Aesthetics. All Rights Reserved.</span>
           
-          <div style={{ display: 'flex', gap: '24px' }}>
-            <a href="#" className="footer-link-bottom">Privacy Policy</a>
-            <a href="#" className="footer-link-bottom">Terms of Sanctuary</a>
-            <a href="#" className="footer-link-bottom">Clinical Disclaimers</a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <span>Developed by Bluetelecast</span>
+            <button 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                color: 'var(--color-gold-light)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                padding: '8px 16px',
+                borderRadius: 'var(--radius-sm)',
+                cursor: 'pointer',
+                fontSize: '11px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                fontWeight: 600,
+                fontFamily: 'var(--font-sans)',
+                transition: 'var(--transition-fast)'
+              }}
+              className="move-to-top-btn"
+            >
+              Move to Top ↑
+            </button>
           </div>
         </div>
       </div>
@@ -263,6 +281,12 @@ export default function Footer({ onBookingClick }) {
         }
         .footer-link-bottom:hover {
           color: var(--color-gold-light) !important;
+        }
+
+        .move-to-top-btn:hover {
+          background-color: var(--color-gold-base) !important;
+          color: white !important;
+          border-color: var(--color-gold-base) !important;
         }
         
         @media (max-width: 900px) {
