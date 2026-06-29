@@ -6,7 +6,7 @@ export default function Specialists() {
       <div className="container">
         {/* Section Header */}
         <div className="section-header">
-          <span className="section-subtitle">Our Medical Specialist</span>
+          <span className="section-subtitle">Our Specialist</span>
           <h2 className="section-title">Clinical Expertise</h2>
           <p className="section-description">
             Entrust your skin health to our founder, a board-certified clinical aesthetician representing over a decade of elite aesthetic care and training.
@@ -70,7 +70,7 @@ export default function Specialists() {
               marginBottom: '8px',
               fontFamily: 'var(--font-sans)'
             }}>
-              Founder & Lead Medical Specialist
+              Founder & Lead Specialist
             </span>
             <h3 style={{
               fontFamily: 'var(--font-serif)',

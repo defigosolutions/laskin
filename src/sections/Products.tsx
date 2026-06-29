@@ -96,7 +96,7 @@ export default function Products() {
             LA Skin Product Collection
           </h1>
           <p className="section-description" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-            Extend your clinical skin outcomes at home. Explore our curated selection of high-potency, medical-grade formulations designed by Laura Andrade.
+            Extend your skin outcomes at home. Explore our curated selection of high-potency, premium formulations designed by Laura Andrade.
           </p>
         </div>
 
@@ -246,7 +246,7 @@ export default function Products() {
             eCommerce Integration Coming Soon
           </h4>
           <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: 'rgba(255, 255, 255, 0.6)', fontWeight: 300, maxWidth: '600px', margin: '0 auto' }}>
-            We are currently structuring our online boutique for direct checkout. In the meantime, you can purchase all medical-grade formulations directly at our North Haven sanctuary during your next visit.
+            We are currently structuring our online boutique for direct checkout. In the meantime, you can purchase all premium formulations directly at our North Haven sanctuary during your next visit.
           </p>
         </div>
       </div>

@@ -20,7 +20,7 @@ export default function Hero({ onBookingClick }) {
 
   const heroBgImage = settings?.heroBgImageUrl || "/images/hero/hero_bg.jpg";
   const heroTitle = settings?.heroTitle || "Elevate Your <br /> <span style='font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--color-gold-base)'>Natural Radiance</span>";
-  const heroSubtitle = settings?.heroSubtitle || "Experience world-class skin health and aesthetic treatments in our state-of-the-art medical spa. Bespoke care tailored to illuminate your timeless beauty.";
+  const heroSubtitle = settings?.heroSubtitle || "Experience world-class skin health and aesthetic treatments in our state-of-the-art studio. Bespoke care tailored to illuminate your timeless beauty.";
 
   return (
     <section 

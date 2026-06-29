@@ -3,8 +3,8 @@ import React from 'react';
 const reasons = [
   {
     id: 1,
-    title: 'Elite Doctor Pedigree',
-    description: 'Our treatments are prescribed and overseen by board-certified cosmetic dermatologists and elite medical aestheticians trained in Beverly Hills, London, and Dubai.',
+    title: 'Elite Expertise',
+    description: 'Our treatments are curated and performed by elite aestheticians with advanced training in Beverly Hills, London, and Dubai.',
     iconSvg: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#goldGrad)" strokeWidth="1.5">
         <path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z" />
@@ -14,7 +14,7 @@ const reasons = [
   },
   {
     id: 2,
-    title: 'FDA-Approved Medical Tech',
+    title: 'Advanced Aesthetic Tech',
     description: 'We deploy only premium, clinically audited diagnostic scanners, laser systems, and radiofrequency devices, ensuring zero-compromise safety and maximum efficacy.',
     iconSvg: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#goldGrad)" strokeWidth="1.5">
@@ -66,7 +66,7 @@ export default function WhyChooseUs() {
           <span className="section-subtitle">Our Standards</span>
           <h2 className="section-title">The Benchmark of Aesthetic Care</h2>
           <p className="section-description">
-            Experience skin wellness engineered at the intersection of medical science, precise clinical expertise, and absolute luxury.
+            Experience skin wellness engineered at the intersection of advanced skincare, precise expertise, and absolute luxury.
           </p>
         </div>
 

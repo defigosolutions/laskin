@@ -5,9 +5,9 @@ export default function About() {
   const { data: settings } = usePublicSiteSettings();
 
   const aboutImage = settings?.aboutImageUrl || "/images/hero/about_bg.jpg";
-  const aboutTitle = settings?.aboutTitle || "A Heritage of Rejuvenation & Timeless Harmony";
-  const aboutDescription1 = settings?.aboutDescription1 || "Founded in Beverly Hills and expanded to global luxury destinations in London and Dubai, <strong>LA Skin & Aesthetics</strong> combines cutting-edge clinical technology with a serene, high-society medical spa atmosphere.";
-  const aboutDescription2 = settings?.aboutDescription2 || "Our clinical philosophy centers around custom anatomical skin mapping, focusing on restoring optimal cellular health and highlighting your natural features without looking artificial or overdone.";
+  const aboutTitle = settings?.aboutTitle || "Welcome to LA Skin & Aesthetics";
+  const aboutDescription1 = settings?.aboutDescription1 || "At LA Skin & Aesthetics, we believe that beauty is more than appearance—it is confidence, wellness, and self-care. Our mission is to provide personalized aesthetic treatments that enhance your natural beauty while delivering the highest standards of professionalism, safety, and excellence. Every client receives individualized care because we understand that every skin type, body, and beauty goal is unique.";
+  const aboutDescription2 = settings?.aboutDescription2 || "We are committed to combining advanced technology, high-quality products, and exceptional service to create results that look natural and leave you feeling refreshed, confident, and empowered. Our goal is not only to help you look your best, but also to make every visit a relaxing and enjoyable experience where you feel valued, cared for, and inspired. Enhancing your natural beauty with elegance, confidence, and exceptional care.";
 
   return (
     <section id="about" className="section" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
@@ -100,14 +100,14 @@ export default function About() {
                 fontWeight: 500,
                 letterSpacing: '0.05em'
               }}>
-                Medical Grade Standards
+                Premium Aesthetic Care
               </span>
             </div>
           </div>
 
           {/* Copy Column */}
           <div className="reveal-in active" style={{ animationDelay: '0.2s' }}>
-            <span className="section-subtitle">About Our Clinic</span>
+            <span className="section-subtitle">About Us</span>
             <h2 className="section-title" style={{ textAlign: 'left' }}>
               {aboutTitle}
             </h2>
@@ -185,7 +185,7 @@ export default function About() {
                     State-of-the-Art Science
                   </h4>
                   <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: 'var(--color-text-muted)', fontWeight: 300 }}>
-                    We exclusively deploy FDA-approved, medical-grade technologies and premium clinically researched serums.
+                    We deploy premium, high-quality technologies and advanced skincare formulations.
                   </p>
                 </div>
               </li>

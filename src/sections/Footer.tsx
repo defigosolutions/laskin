@@ -70,7 +70,7 @@ export default function Footer({ onBookingClick }) {
               marginTop: '20px',
               maxWidth: '280px'
             }}>
-              A premium clinical merger of medical diagnostics and five-star relaxation. Radiate your natural energy.
+              A premium merger of advanced aesthetics and five-star relaxation. Radiate your natural energy.
             </p>
             <p style={{
               fontSize: '13px',

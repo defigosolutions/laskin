@@ -19,7 +19,7 @@ export default function Treatments({ onBookTreatment }: { onBookTreatment: (id: 
           <span className="section-subtitle">Featured Treatments</span>
           <h2 className="section-title">Elevate Your Skincare Journey</h2>
           <p className="section-description">
-            Discover our curated, medical-grade skin therapies designed by world-renowned specialists to restore cellular luminosity and natural beauty.
+            Discover our curated, advanced skin therapies designed by aesthetic specialists to restore cellular luminosity and natural beauty.
           </p>
         </div>
 
