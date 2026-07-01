@@ -5,13 +5,22 @@ dotenv.config();
 
 const { Pool } = pg;
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://laskin_user:Ac9g0FA%2C6X%22P@34.182.208.192:5432/laskin_db';
-
-const pool = new Pool({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+// Support both DATABASE_URL and individual PG* env vars
+// Individual params are safer when password contains special characters
+const pool = new Pool(
+  process.env.DATABASE_URL
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
+      }
+    : {
+        host: process.env.PGHOST || 'localhost',
+        port: parseInt(process.env.PGPORT || '5432'),
+        database: process.env.PGDATABASE,
+        user: process.env.PGUSER,
+        password: process.env.PGPASSWORD,
+        ssl: { rejectUnauthorized: false }
+      }
+);
 
 export default pool;
