@@ -1,0 +1,22 @@
+---
+deployment:
+  tasks:
+    # 1. Update the PATH to ensure cPanel's node/npm is used
+    # Note: Check your cPanel terminal if you need a different node version (e.g., ea-nodejs18 or ea-nodejs20)
+    - export PATH=/opt/cpanel/ea-nodejs20/bin:$PATH
+
+    # 2. Build the Frontend (Vite/React)
+    # This runs the installation and build for the frontend project
+    - /opt/cpanel/ea-nodejs20/bin/npm install
+    - /opt/cpanel/ea-nodejs20/bin/npm run build
+
+    # 3. Copy Frontend Build to public_html
+    # Replace YOUR_CPANEL_USERNAME with your actual cPanel username
+    # This clears old files and copies the new dist files to your main domain's document root
+    - rm -rf /home/laskinaestheticsct/public_html/*
+    - cp -R dist/* /home/laskinaestheticsct/public_html/
+
+    # 4. Install Backend Dependencies
+    # This enters the server directory and installs dependencies for the Node.js API
+    - cd server
+    - /opt/cpanel/ea-nodejs20/bin/npm install
