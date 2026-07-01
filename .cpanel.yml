@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    - /opt/cpanel/ea-nodejs20/bin/npm install
+    - /opt/cpanel/ea-nodejs20/bin/npm run build
+    - rm -rf /home/laskyhbh/public_html/*
+    - cp -R dist/. /home/laskyhbh/public_html/
+    - cd server && /opt/cpanel/ea-nodejs20/bin/npm install
