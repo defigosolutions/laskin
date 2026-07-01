@@ -38,3 +38,8 @@ server/uploads/
 # Production deploy script
 deploy-prod.sh
 
+# cPanel Node.js App generated files
+server/.htaccess
+server/tmp/
+server/logs/
+server/passenger_wsgi.py
