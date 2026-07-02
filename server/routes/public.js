@@ -1,25 +1,8 @@
 import express from 'express';
 import pool from '../db.js';
 import nodemailer from 'nodemailer';
-import fs from 'fs';
-import path from 'path';
 
 const router = express.Router();
-
-router.get('/debug-logs', (req, res) => {
-  try {
-    const logPath = '/home/laskyhbh/laskin/server/stderr.log';
-    if (fs.existsSync(logPath)) {
-      const logs = fs.readFileSync(logPath, 'utf8').split('\n').slice(-100).join('\n');
-      res.type('text/plain').send(logs);
-    } else {
-      res.send('No stderr.log found');
-    }
-  } catch (err) {
-    res.send(err.message);
-  }
-});
-
 
 async function sendNotificationEmail(subject, htmlContent) {
   try {
