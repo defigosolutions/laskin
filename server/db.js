@@ -11,7 +11,7 @@ const pool = new Pool(
   process.env.DATABASE_URL
     ? {
         connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false }
+        ...(process.env.PGSSLMODE !== 'disable' && { ssl: { rejectUnauthorized: false } })
       }
     : {
         host: process.env.PGHOST || 'localhost',
