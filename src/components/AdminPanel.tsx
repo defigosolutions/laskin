@@ -1446,6 +1446,13 @@ export default function AdminPanel() {
                       <input type="email" value={smtpSettings.sender_email || ''} onChange={(e) => setSmtpSettings({ ...smtpSettings, sender_email: e.target.value })} style={{ padding: '10px', backgroundColor: '#111', border: '1px solid #222', color: 'white', borderRadius: '4px' }} />
                     </div>
                   </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px', marginBottom: '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <label style={{ fontSize: '11px', color: '#d4af37' }}>Receiver Email Address (For Client Notifications)</label>
+                      <input type="email" value={smtpSettings.receiver_email || ''} onChange={(e) => setSmtpSettings({ ...smtpSettings, receiver_email: e.target.value })} style={{ padding: '10px', backgroundColor: '#111', border: '1px solid #d4af37', color: 'white', borderRadius: '4px' }} placeholder="client@example.com" />
+                      <span style={{ fontSize: '11px', color: '#666' }}>All contact and product inquiries will be automatically emailed to this address.</span>
+                    </div>
+                  </div>
                   <div style={{ display: 'flex', gap: '12px' }}>
                     <button 
                       onClick={() => handleSaveSetting('settings.smtp', smtpSettings)}

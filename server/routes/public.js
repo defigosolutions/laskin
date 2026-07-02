@@ -1,8 +1,39 @@
 import express from 'express';
 import pool from '../db.js';
+import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
+async function sendNotificationEmail(subject, htmlContent) {
+  try {
+    const res = await pool.query(`SELECT value FROM site_settings WHERE key = 'settings.smtp'`);
+    if (res.rows.length === 0) return;
+    
+    const smtp = res.rows[0].value;
+    if (!smtp || !smtp.host || !smtp.receiver_email) return;
+
+    const transporter = nodemailer.createTransport({
+      host: smtp.host,
+      port: parseInt(smtp.port || 465),
+      secure: smtp.encryption === 'SSL' || smtp.port == 465,
+      auth: smtp.username ? {
+        user: smtp.username,
+        pass: smtp.password
+      } : undefined,
+      tls: { rejectUnauthorized: false }
+    });
+
+    await transporter.sendMail({
+      from: smtp.sender_email || smtp.username,
+      to: smtp.receiver_email,
+      subject: subject,
+      html: htmlContent
+    });
+    console.log(`Notification email sent to ${smtp.receiver_email}`);
+  } catch (err) {
+    console.error('Failed to send notification email:', err);
+  }
+}
 // Helper to format currency
 function formatCentsToUSD(cents) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);
@@ -575,6 +606,19 @@ router.post('/contact-inquiry', async (req, res) => {
       VALUES ($1, $2, $3, $4, $5, $6)
     `, [customerId, fullName, emailLower, phone || null, subject, message]);
 
+    // Send email notification
+    await sendNotificationEmail(
+      `New Contact Inquiry: ${subject}`,
+      `<h3>New Contact Inquiry Received</h3>
+       <p><strong>Name:</strong> ${fullName}</p>
+       <p><strong>Email:</strong> ${emailLower}</p>
+       <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+       <p><strong>Subject:</strong> ${subject}</p>
+       <hr/>
+       <p><strong>Message:</strong></p>
+       <p>${message.replace(/\n/g, '<br/>')}</p>`
+    );
+
     res.json({ message: 'Thank you for reaching out. Your message has been sent.' });
   } catch (err) {
     console.error('Contact inquiry error:', err);
@@ -610,6 +654,26 @@ router.post('/product-inquiry', async (req, res) => {
       INSERT INTO product_inquiries (customer_id, product_id, full_name, email, phone, message)
       VALUES ($1, $2, $3, $4, $5, $6)
     `, [customerId, productId, fullName, emailLower, phone || null, message || null]);
+
+    // Fetch product details for the email
+    let productName = productId;
+    try {
+      const prodRes = await pool.query('SELECT name FROM products WHERE id = $1', [productId]);
+      if (prodRes.rows.length > 0) productName = prodRes.rows[0].name;
+    } catch(e) {}
+
+    // Send email notification
+    await sendNotificationEmail(
+      `New Product Inquiry: ${productName}`,
+      `<h3>New Product Inquiry Received</h3>
+       <p><strong>Name:</strong> ${fullName}</p>
+       <p><strong>Email:</strong> ${emailLower}</p>
+       <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+       <p><strong>Product Interested In:</strong> ${productName}</p>
+       <hr/>
+       <p><strong>Message:</strong></p>
+       <p>${message ? message.replace(/\n/g, '<br/>') : 'No message provided.'}</p>`
+    );
 
     res.json({ message: 'Thank you for your interest. We will contact you soon.' });
   } catch (err) {
