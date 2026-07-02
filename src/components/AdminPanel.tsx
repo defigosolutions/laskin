@@ -317,7 +317,7 @@ export default function AdminPanel() {
   // Save Settings
   const handleSaveSetting = async (key: string, value: any) => {
     try {
-      await api.put(`/settings/${key}`, { value });
+      await api.put(`/admin/settings/${key}`, { value });
       alert('Settings saved successfully!');
     } catch (err) {
       alert('Failed to save settings.');
@@ -329,7 +329,7 @@ export default function AdminPanel() {
     setSmtpTesting(true);
     setSmtpTestResult(null);
     try {
-      const res = await api.post('/settings/smtp/test', smtpSettings);
+      const res = await api.post('/admin/settings/smtp/test', smtpSettings);
       setSmtpTestResult(res.data.message);
     } catch (err: any) {
       setSmtpTestResult(`Error: ${err.response?.data?.error || err.message}`);
