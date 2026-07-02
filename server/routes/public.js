@@ -635,8 +635,8 @@ router.post('/contact-inquiry', async (req, res) => {
       VALUES ($1, $2, $3, $4, $5, $6)
     `, [customerId, fullName, emailLower, phone || null, subject, message]);
 
-    // Send email notification in the background (no await)
-    sendNotificationEmail(
+    // Send email notification (await required for Passenger/cPanel)
+    await sendNotificationEmail(
       `New Contact Inquiry: ${subject}`,
       `<h3>New Contact Inquiry Received</h3>
        <p><strong>Name:</strong> ${fullName}</p>
@@ -691,8 +691,8 @@ router.post('/product-inquiry', async (req, res) => {
       if (prodRes.rows.length > 0) productName = prodRes.rows[0].name;
     } catch(e) {}
 
-    // Send email notification in the background (no await)
-    sendNotificationEmail(
+    // Send email notification (await required for Passenger/cPanel)
+    await sendNotificationEmail(
       `New Product Inquiry: ${productName}`,
       `<h3>New Product Inquiry Received</h3>
        <p><strong>Name:</strong> ${fullName}</p>
