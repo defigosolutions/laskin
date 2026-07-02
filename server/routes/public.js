@@ -622,7 +622,7 @@ router.post('/contact-inquiry', async (req, res) => {
     res.json({ message: 'Thank you for reaching out. Your message has been sent.' });
   } catch (err) {
     console.error('Contact inquiry error:', err);
-    res.status(500).json({ error: 'Server error saving contact inquiry.' });
+    res.status(500).json({ error: 'Server error saving contact inquiry.', details: err.message, stack: err.stack });
   }
 });
 
@@ -678,7 +678,7 @@ router.post('/product-inquiry', async (req, res) => {
     res.json({ message: 'Thank you for your interest. We will contact you soon.' });
   } catch (err) {
     console.error('Product inquiry error:', err);
-    res.status(500).json({ error: 'Server error saving product inquiry.' });
+    res.status(500).json({ error: 'Server error saving product inquiry.', details: err.message, stack: err.stack });
   }
 });
 
