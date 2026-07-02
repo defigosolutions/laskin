@@ -4,6 +4,35 @@ import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
+router.get('/test-email', async (req, res) => {
+  try {
+    const smtpRes = await pool.query(`SELECT value FROM site_settings WHERE key = 'settings.smtp'`);
+    if (smtpRes.rows.length === 0) return res.send('No SMTP settings found in DB');
+    
+    const smtp = smtpRes.rows[0].value;
+    if (!smtp || !smtp.host || !smtp.receiver_email) return res.send('Incomplete SMTP settings');
+
+    const transporter = nodemailer.createTransport({
+      host: smtp.host,
+      port: parseInt(smtp.port || 465),
+      secure: smtp.encryption === 'SSL' || smtp.port == 465,
+      auth: smtp.username ? { user: smtp.username, pass: smtp.password } : undefined,
+      tls: { rejectUnauthorized: false }
+    });
+
+    await transporter.sendMail({
+      from: smtp.sender_email || smtp.username,
+      to: smtp.receiver_email,
+      subject: 'Test Notification',
+      html: '<p>This is a test notification from the backend.</p>'
+    });
+    res.send('SUCCESS');
+  } catch (err) {
+    res.send('ERROR: ' + err.message + '\n' + err.stack);
+  }
+});
+
+
 async function sendNotificationEmail(subject, htmlContent) {
   try {
     const res = await pool.query(`SELECT value FROM site_settings WHERE key = 'settings.smtp'`);
