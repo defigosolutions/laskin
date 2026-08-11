@@ -1399,18 +1399,20 @@ export default function AdminPanel() {
                             >
                               Change Password
                             </button>
-                            <button 
-                              onClick={() => {
-                                if (confirm('Are you sure you want to delete this user?')) {
-                                  api.delete(`/admin/users/${u.id}`)
-                                     .then(() => loadTabData())
-                                     .catch(e => alert(e.response?.data?.error || 'Failed to delete user'));
-                                }
-                              }}
-                              style={{ padding: '4px 8px', backgroundColor: 'rgba(255,0,0,0.1)', color: 'red', border: '1px solid red', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
-                            >
-                              Delete
-                            </button>
+                            {users.length > 1 && user?.id !== u.id && (
+                              <button 
+                                onClick={() => {
+                                  if (confirm('Are you sure you want to delete this user?')) {
+                                    api.delete(`/admin/users/${u.id}`)
+                                       .then(() => loadTabData())
+                                       .catch(e => alert(e.response?.data?.error || 'Failed to delete user'));
+                                  }
+                                }}
+                                style={{ padding: '4px 8px', backgroundColor: 'rgba(255,0,0,0.1)', color: 'red', border: '1px solid red', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
+                              >
+                                Delete
+                              </button>
+                            )}
                           </div>
                         </td>
                       </tr>
