@@ -1359,15 +1359,10 @@ export default function AdminPanel() {
                   <span style={{ fontSize: '14px', color: '#d4af37' }}>System Administrators ({users.length})</span>
                   <button 
                     onClick={() => {
-                      const email = prompt('Enter new user email:');
-                      const password = prompt('Enter new user password (min 6 chars):');
-                      const fullName = prompt('Enter full name:');
-                      if (email && password && fullName) {
-                        api.post('/admin/users', { email, password, full_name: fullName, role: 'admin' })
-                           .then(() => { alert('User created successfully!'); loadTabData(); })
-                           .catch(e => alert(e.response?.data?.error || 'Error creating user'));
-                      }
-                    }}
+                        setEditingItem({ email: '', password: '', full_name: '', role: 'admin' });
+                        setDrawerType('user');
+                        setDrawerOpen(true);
+                      }}
                     style={{ padding: '8px 16px', background: 'var(--color-gold-gradient)', border: 'none', color: 'black', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '12px' }}
                   >
                     + Add New User
@@ -1396,12 +1391,9 @@ export default function AdminPanel() {
                           <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                             <button 
                               onClick={() => {
-                                const newPassword = prompt('Enter new password for ' + u.full_name);
-                                if (newPassword) {
-                                  api.patch(`/admin/users/${u.id}/password`, { newPassword })
-                                     .then(() => alert('Password updated successfully!'))
-                                     .catch(e => alert(e.response?.data?.error || 'Failed to update password'));
-                                }
+                                setEditingItem({ id: u.id, full_name: u.full_name, newPassword: '' });
+                                setDrawerType('user_password');
+                                setDrawerOpen(true);
                               }}
                               style={{ padding: '4px 8px', backgroundColor: '#111', color: '#d4af37', border: '1px solid #222', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
                             >
@@ -1852,6 +1844,74 @@ export default function AdminPanel() {
               </>
             )}
 
+            {/* USER FORM */}
+            {drawerType === 'user' && (
+              <>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase' }}>Full Name *</label>
+                  <input 
+                    type="text" 
+                    value={editingItem.full_name} 
+                    onChange={e => setEditingItem({ ...editingItem, full_name: e.target.value })} 
+                    style={{ padding: '10px', backgroundColor: '#111', color: 'white', border: '1px solid #222', borderRadius: '4px' }} 
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase' }}>Email Address *</label>
+                  <input 
+                    type="email" 
+                    value={editingItem.email} 
+                    onChange={e => setEditingItem({ ...editingItem, email: e.target.value })} 
+                    style={{ padding: '10px', backgroundColor: '#111', color: 'white', border: '1px solid #222', borderRadius: '4px' }} 
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase' }}>Password (min 6 chars) *</label>
+                  <input 
+                    type="password" 
+                    value={editingItem.password} 
+                    onChange={e => setEditingItem({ ...editingItem, password: e.target.value })} 
+                    style={{ padding: '10px', backgroundColor: '#111', color: 'white', border: '1px solid #222', borderRadius: '4px' }} 
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase' }}>Role</label>
+                  <select 
+                    value={editingItem.role} 
+                    onChange={e => setEditingItem({ ...editingItem, role: e.target.value })} 
+                    style={{ padding: '10px', backgroundColor: '#111', color: 'white', border: '1px solid #222', borderRadius: '4px' }}
+                  >
+                    <option value="admin">Admin</option>
+                    <option value="super_admin">Super Admin</option>
+                  </select>
+                </div>
+              </>
+            )}
+
+            {/* USER PASSWORD FORM */}
+            {drawerType === 'user_password' && (
+              <>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase' }}>Change Password For</label>
+                  <input 
+                    type="text" 
+                    disabled
+                    value={editingItem.full_name} 
+                    style={{ padding: '10px', backgroundColor: '#222', color: '#888', border: '1px solid #333', borderRadius: '4px' }} 
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase' }}>New Password (min 6 chars) *</label>
+                  <input 
+                    type="password" 
+                    value={editingItem.newPassword} 
+                    onChange={e => setEditingItem({ ...editingItem, newPassword: e.target.value })} 
+                    style={{ padding: '10px', backgroundColor: '#111', color: 'white', border: '1px solid #222', borderRadius: '4px' }} 
+                  />
+                </div>
+              </>
+            )}
+
           </div>
 
           <div style={{ padding: '24px', borderTop: '1px solid #1a1a1a', display: 'flex', gap: '12px' }}>
@@ -1882,6 +1942,10 @@ export default function AdminPanel() {
                     } else {
                       await api.post('/admin/before-after', editingItem);
                     }
+                  } else if (drawerType === 'user') {
+                    await api.post('/admin/users', editingItem);
+                  } else if (drawerType === 'user_password') {
+                    await api.patch(`/admin/users/${editingItem.id}/password`, { newPassword: editingItem.newPassword });
                   }
                   setDrawerOpen(false);
                   loadTabData();
