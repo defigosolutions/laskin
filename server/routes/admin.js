@@ -5,6 +5,7 @@ import fs from 'fs';
 import nodemailer from 'nodemailer';
 import pool from '../db.js';
 import { authenticateToken } from './auth.js';
+import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
@@ -1079,6 +1080,75 @@ router.post('/upload', upload.single('image'), (req, res) => {
   }
   const fileUrl = `/uploads/${req.file.filename}`;
   res.json({ imageUrl: fileUrl });
+});
+
+// ==========================================
+// 15. User & Access Management
+// ==========================================
+router.get('/users', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT id, email, full_name, role, is_active, created_at FROM users ORDER BY created_at DESC');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch users.' });
+  }
+});
+
+router.post('/users', async (req, res) => {
+  const { email, password, full_name, role } = req.body;
+  if (!email || !password || !full_name) {
+    return res.status(400).json({ error: 'Email, password, and full name are required.' });
+  }
+  
+  try {
+    const existing = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: 'Email is already registered.' });
+    }
+    const hash = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      'INSERT INTO users (email, password_hash, full_name, role) VALUES ($1, $2, $3, $4) RETURNING id, email, full_name, role, is_active, created_at',
+      [email.toLowerCase(), hash, full_name, role || 'admin']
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to create user.' });
+  }
+});
+
+router.patch('/users/:id/password', async (req, res) => {
+  const { id } = req.params;
+  const { newPassword } = req.body;
+  if (!newPassword || newPassword.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters.' });
+  }
+  
+  try {
+    const hash = await bcrypt.hash(newPassword, 10);
+    await pool.query('UPDATE users SET password_hash = $1, updated_at = now() WHERE id = $2', [hash, id]);
+    res.json({ success: true, message: 'Password updated successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update password.' });
+  }
+});
+
+router.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    // Prevent deleting the last admin or super_admin
+    const count = await pool.query('SELECT COUNT(*) FROM users');
+    if (parseInt(count.rows[0].count) <= 1) {
+      return res.status(400).json({ error: 'Cannot delete the last remaining user.' });
+    }
+    await pool.query('DELETE FROM users WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to delete user.' });
+  }
 });
 
 export default router;

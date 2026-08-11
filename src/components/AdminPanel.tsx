@@ -24,6 +24,7 @@ export default function AdminPanel() {
   // Login States
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [captchaId, setCaptchaId] = useState('');
   const [captchaQuestion, setCaptchaQuestion] = useState('');
   const [captchaAnswer, setCaptchaAnswer] = useState('');
@@ -36,6 +37,7 @@ export default function AdminPanel() {
   const [treatments, setTreatments] = useState<any[]>([]);
   const [packages, setPackages] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [specialists, setSpecialists] = useState<any[]>([]);
   const [beforeAfters, setBeforeAfters] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
@@ -175,6 +177,9 @@ export default function AdminPanel() {
       } else if (activeTab === 'seo') {
         const res = await api.get('/admin/seo');
         setSeoRoutes(res.data || []);
+      } else if (activeTab === 'users') {
+        const res = await api.get('/admin/users');
+        setUsers(res.data);
       }
     } catch (err) {
       console.error(`Error loading tab ${activeTab}:`, err);
@@ -392,21 +397,44 @@ export default function AdminPanel() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <label style={{ fontSize: '10px', textTransform: 'uppercase', color: '#aaa', letterSpacing: '0.05em' }}>Password</label>
-              <input 
-                type="password" 
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                style={{
-                  padding: '12px',
-                  backgroundColor: '#111',
-                  border: '1px solid #222',
-                  borderRadius: '4px',
-                  color: 'white',
-                  fontSize: '14px'
-                }}
-              />
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    paddingRight: '40px',
+                    backgroundColor: '#111',
+                    border: '1px solid #222',
+                    borderRadius: '4px',
+                    color: 'white',
+                    fontSize: '14px'
+                  }}
+                />
+                <button 
+                  type="button" 
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    background: 'none',
+                    border: 'none',
+                    color: '#888',
+                    cursor: 'pointer',
+                    padding: '0'
+                  }}
+                >
+                  {showPassword ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22"/></svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  )}
+                </button>
+              </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid #222', paddingTop: '16px' }}>
@@ -490,6 +518,7 @@ export default function AdminPanel() {
             { id: 'product_inquiries', label: 'Product Inquiries', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
             { id: 'subscribers', label: 'Newsletter Registry', icon: 'M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206' },
             { id: 'seo', label: 'SEO Management', icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' },
+            { id: 'users', label: 'Users & Access', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
             { id: 'settings', label: 'System Settings', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' }
           ].map(tab => (
             <button
@@ -1313,6 +1342,84 @@ export default function AdminPanel() {
                           >
                             Remove
                           </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table></div>
+              </div>
+            )}
+
+            {/* ==========================================
+                TAB: USERS & ACCESS
+                ========================================== */}
+            {activeTab === 'users' && (
+              <div style={{ backgroundColor: '#0a0a0a', border: '1px solid #1a1a1a', borderRadius: '8px', padding: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                  <span style={{ fontSize: '14px', color: '#d4af37' }}>System Administrators ({users.length})</span>
+                  <button 
+                    onClick={() => {
+                      const email = prompt('Enter new user email:');
+                      const password = prompt('Enter new user password (min 6 chars):');
+                      const fullName = prompt('Enter full name:');
+                      if (email && password && fullName) {
+                        api.post('/admin/users', { email, password, full_name: fullName, role: 'admin' })
+                           .then(() => { alert('User created successfully!'); loadTabData(); })
+                           .catch(e => alert(e.response?.data?.error || 'Error creating user'));
+                      }
+                    }}
+                    style={{ padding: '8px 16px', background: 'var(--color-gold-gradient)', border: 'none', color: 'black', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '12px' }}
+                  >
+                    + Add New User
+                  </button>
+                </div>
+                <div className="table-responsive"><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid #222', color: '#888', textAlign: 'left' }}>
+                      <th style={{ paddingBottom: '12px' }}>Name</th>
+                      <th style={{ paddingBottom: '12px' }}>Email</th>
+                      <th style={{ paddingBottom: '12px' }}>Role</th>
+                      <th style={{ paddingBottom: '12px' }}>Status</th>
+                      <th style={{ paddingBottom: '12px', textAlign: 'right' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map(u => (
+                      <tr key={u.id} style={{ borderBottom: '1px solid #151515' }}>
+                        <td style={{ padding: '16px 0', color: 'white', fontWeight: 'bold' }}>{u.full_name}</td>
+                        <td style={{ padding: '16px 0', color: '#aaa' }}>{u.email}</td>
+                        <td style={{ padding: '16px 0', color: '#d4af37' }}>{u.role}</td>
+                        <td style={{ padding: '16px 0' }}>
+                          <span style={{ color: u.is_active ? '#00c850' : '#ff4444' }}>{u.is_active ? 'Active' : 'Inactive'}</span>
+                        </td>
+                        <td style={{ padding: '16px 0', textAlign: 'right' }}>
+                          <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                            <button 
+                              onClick={() => {
+                                const newPassword = prompt('Enter new password for ' + u.full_name);
+                                if (newPassword) {
+                                  api.patch(`/admin/users/${u.id}/password`, { newPassword })
+                                     .then(() => alert('Password updated successfully!'))
+                                     .catch(e => alert(e.response?.data?.error || 'Failed to update password'));
+                                }
+                              }}
+                              style={{ padding: '4px 8px', backgroundColor: '#111', color: '#d4af37', border: '1px solid #222', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
+                            >
+                              Change Password
+                            </button>
+                            <button 
+                              onClick={() => {
+                                if (confirm('Are you sure you want to delete this user?')) {
+                                  api.delete(`/admin/users/${u.id}`)
+                                     .then(() => loadTabData())
+                                     .catch(e => alert(e.response?.data?.error || 'Failed to delete user'));
+                                }
+                              }}
+                              style={{ padding: '4px 8px', backgroundColor: 'rgba(255,0,0,0.1)', color: 'red', border: '1px solid red', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
