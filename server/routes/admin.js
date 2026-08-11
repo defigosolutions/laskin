@@ -1114,7 +1114,7 @@ router.post('/users', async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to create user.' });
+    res.status(500).json({ error: 'Failed to create user. Detail: ' + (err.message || 'unknown error') });
   }
 });
 
