@@ -7,18 +7,7 @@ import pool from '../db.js';
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_ACCESS_SECRET || 'laskin_jwt_secret_token_key_2026';
 
-// Memory store for CAPTCHAs (id -> { answer, expires })
-const captchaStore = new Map();
 
-// Periodic cleanup of expired CAPTCHAs
-setInterval(() => {
-  const now = Date.now();
-  for (const [id, value] of captchaStore.entries()) {
-    if (value.expires < now) {
-      captchaStore.delete(id);
-    }
-  }
-}, 60 * 1000);
 
 // Rate limiter for login endpoint (max 5 requests per 10 minutes)
 const loginLimiter = rateLimit({
@@ -47,47 +36,12 @@ export function authenticateToken(req, res, next) {
   });
 }
 
-// GET: Generate Math CAPTCHA
-router.get('/captcha', (req, res) => {
-  const num1 = Math.floor(Math.random() * 10) + 1; // 1 to 10
-  const num2 = Math.floor(Math.random() * 10) + 1;
-  const isAddition = Math.random() > 0.5;
-
-  const question = isAddition ? `${num1} + ${num2} = ?` : `${num1} - ${num2} = ?`;
-  const answer = isAddition ? num1 + num2 : num1 - num2;
-  const captchaId = Math.random().toString(36).substring(2, 15);
-  
-  // Expire in 3 minutes
-  captchaStore.set(captchaId, {
-    answer,
-    expires: Date.now() + 3 * 60 * 1000
-  });
-
-  res.json({ captchaId, question });
-});
-
 // POST: Login staff member
 router.post('/login', loginLimiter, async (req, res) => {
-  const { email, password, captchaId, captchaAnswer } = req.body;
+  const { email, password } = req.body;
 
-  if (!email || !password || !captchaId || captchaAnswer === undefined) {
-    return res.status(400).json({ error: 'All fields including CAPTCHA are required.' });
-  }
-
-  // 1. Verify CAPTCHA
-  const storedCaptcha = captchaStore.get(captchaId);
-  if (!storedCaptcha) {
-    return res.status(400).json({ error: 'CAPTCHA has expired. Please refresh and try again.' });
-  }
-
-  captchaStore.delete(captchaId); // Use once
-
-  if (storedCaptcha.expires < Date.now()) {
-    return res.status(400).json({ error: 'CAPTCHA has expired. Please refresh.' });
-  }
-
-  if (parseInt(captchaAnswer) !== storedCaptcha.answer) {
-    return res.status(400).json({ error: 'Incorrect CAPTCHA answer.' });
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required.' });
   }
 
   try {

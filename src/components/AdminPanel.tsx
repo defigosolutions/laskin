@@ -25,9 +25,7 @@ export default function AdminPanel() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [captchaId, setCaptchaId] = useState('');
-  const [captchaQuestion, setCaptchaQuestion] = useState('');
-  const [captchaAnswer, setCaptchaAnswer] = useState('');
+
   const [loginError, setLoginError] = useState<string | null>(null);
   const [loginLoading, setLoginLoading] = useState(false);
 
@@ -67,22 +65,8 @@ export default function AdminPanel() {
     headers: token ? { 'Authorization': `Bearer ${token}` } : {}
   });
 
-  // Fetch math CAPTCHA
-  const fetchCaptcha = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/admin/auth/captcha`);
-      setCaptchaId(res.data.captchaId);
-      setCaptchaQuestion(res.data.question);
-      setCaptchaAnswer('');
-    } catch (err) {
-      console.error('Error fetching captcha:', err);
-    }
-  };
-
   useEffect(() => {
-    if (!token) {
-      fetchCaptcha();
-    } else {
+    if (token) {
       fetchUserProfile();
     }
   }, [token]);
@@ -111,9 +95,7 @@ export default function AdminPanel() {
     try {
       const res = await axios.post(`${BASE_URL}/admin/auth/login`, {
         email,
-        password,
-        captchaId,
-        captchaAnswer
+        password
       });
       const receivedToken = res.data.token;
       localStorage.setItem('laskin_admin_token', receivedToken);
@@ -121,7 +103,6 @@ export default function AdminPanel() {
       setUser(res.data.user);
     } catch (err: any) {
       setLoginError(err.response?.data?.error || 'Login failed. Please verify credentials.');
-      fetchCaptcha(); // Refresh CAPTCHA on error
     } finally {
       setLoginLoading(false);
     }
@@ -437,31 +418,7 @@ export default function AdminPanel() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid #222', paddingTop: '16px' }}>
-              <label style={{ fontSize: '10px', textTransform: 'uppercase', color: '#aaa', letterSpacing: '0.05em' }}>Security Verification</label>
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#d4af37', backgroundColor: '#111', padding: '10px 16px', borderRadius: '4px', border: '1px solid #222' }}>
-                  {captchaQuestion || 'Loading...'}
-                </span>
-                <input 
-                  type="number" 
-                  required
-                  value={captchaAnswer}
-                  onChange={(e) => setCaptchaAnswer(e.target.value)}
-                  placeholder="?"
-                  style={{
-                    flex: 1,
-                    padding: '12px',
-                    backgroundColor: '#111',
-                    border: '1px solid #222',
-                    borderRadius: '4px',
-                    color: 'white',
-                    fontSize: '16px',
-                    textAlign: 'center'
-                  }}
-                />
-              </div>
-            </div>
+
 
             <button 
               type="submit"
